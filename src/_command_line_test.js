@@ -18,4 +18,13 @@ describe("CommandLine", function() {
 		}
 	});
 
+	it("writes to console", function() {
+		
+	});
+
+	it("is nullable", function() {
+		const cli = CommandLine.createNull("my_arg");
+		assert.equal(cli.arg(), "my_arg");
+	});
+
 });

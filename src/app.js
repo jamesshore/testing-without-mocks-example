@@ -1,10 +1,16 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
+const CommandLine = require("./command_line.js");
+
 module.exports = class App {
 
+	constructor(cli = CommandLine.create()) {
+		this._cli = cli;
+	}
+
 	run() {
-		const data = "hello";
+		const data = this._cli.arg();
 		return rot13(data);
 	}
 
