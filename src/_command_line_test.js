@@ -3,6 +3,7 @@
 
 const assert = require("./assert.js");
 const CommandLine = require("./command_line.js");
+const stdout = require("test-console").stdout;
 
 describe("CommandLine", function() {
 
@@ -19,12 +20,24 @@ describe("CommandLine", function() {
 	});
 
 	it("writes to console", function() {
-		
+		stdout.inspectSync((output) => {
+			const cli = CommandLine.create();
+			cli.output("my output");
+			assert.deepEqual(output, [ "my output\n" ]);
+		});
 	});
 
-	it("is nullable", function() {
+	it("arg is nullable", function() {
 		const cli = CommandLine.createNull("my_arg");
 		assert.equal(cli.arg(), "my_arg");
+	});
+
+	it("console is nullable", function() {
+		stdout.inspectSync((output) => {
+			const cli = CommandLine.createNull();
+			cli.output("my output");
+			assert.deepEqual(output, [], "should not actually output");
+		});
 	});
 
 });
