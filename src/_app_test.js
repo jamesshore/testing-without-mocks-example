@@ -11,8 +11,8 @@ describe("ROT-13 App", function() {
 		const cli = CommandLine.createNull("my_cli_arg");
 		const app = new App(cli);
 
-		const actual = app.run();
-		assert.equal(actual, "zl_pyv_net");
+		app.run();
+		assert.equal(cli.getLastOutput(), "zl_pyv_net");
 	});
 
 });

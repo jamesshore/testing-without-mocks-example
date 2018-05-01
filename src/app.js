@@ -11,7 +11,7 @@ module.exports = class App {
 
 	run() {
 		const data = this._cli.arg();
-		return rot13(data);
+		this._cli.output(rot13(data));
 	}
 
 };
