@@ -17,7 +17,7 @@ module.exports = class CommandLine {
 	}
 
 	arg() {
-		return this._process.argv[1];
+		return this._process.argv[2];
 	}
 
 	output(data) {
@@ -39,7 +39,7 @@ class NullProcess {
 		this._arg = arg;
 	}
 	get argv() {
-		return [ undefined, this._arg ];
+		return [ undefined, undefined, this._arg ];
 	}
 }
 

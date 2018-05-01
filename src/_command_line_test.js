@@ -9,7 +9,7 @@ describe("CommandLine", function() {
 
 	it("provides first command-line argument", function() {
 		const savedArgs = process.argv;
-		process.argv = ["ignore", "first_argument"];
+		process.argv = ["ignore 1", "ignore 2", "first_argument"];
 		try {
 			const cli = CommandLine.create();
 			assert.equal(cli.arg(), "first_argument");
