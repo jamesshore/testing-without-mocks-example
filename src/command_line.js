@@ -22,6 +22,11 @@ module.exports = class CommandLine {
 
 	output(data) {
 		this._console.log(data);
+		this._lastOutput = data;
+	}
+
+	getLastOutput() {
+		return this._lastOutput;
 	}
 
 };

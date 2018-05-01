@@ -27,6 +27,14 @@ describe("CommandLine", function() {
 		});
 	});
 
+	it("provides last line written to console", function() {
+		stdout.ignoreSync(() => {
+			const cli = CommandLine.create();
+			cli.output("my output");
+			assert.equal(cli.getLastOutput(), "my output");
+		});
+	});
+
 	it("arg is nullable", function() {
 		const cli = CommandLine.createNull("my_arg");
 		assert.equal(cli.arg(), "my_arg");
