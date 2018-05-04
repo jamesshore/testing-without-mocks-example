@@ -7,7 +7,7 @@ const CommandLine = require("./command_line.js");
 
 describe("ROT-13 App", function() {
 
-	it("encodes hello", function() {
+	it("encodes command-line argument and outputs the result", function() {
 		const cli = CommandLine.createNull("my_cli_arg");
 		const app = new App(cli);
 
