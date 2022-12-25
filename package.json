@@ -1,24 +1,25 @@
 {
-  "name": "deliver_agile_2018",
-  "engines": {
-    "node": "9.11.1"
-  },
+  "name": "testing-without-mocks-example",
   "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "18.12.1"
+  },
   "description": "",
-  "main": "index.js",
+  "main": "run.js",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "eslint": "^8.30.0",
+    "gaze": "^1.1.3",
+    "glob": "^8.0.3",
+    "minimist": "^1.2.7",
+    "mocha": "^10.2.0",
+    "shelljs": "^0.8.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./build.sh",
+    "start": "./run.sh"
   },
   "author": "James Shore <jshore@jamesshore.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.19.1",
-    "glob": "^7.1.2",
-    "jake": "^8.0.16",
-    "mocha": "^5.1.1",
-    "semver": "^5.5.0",
-    "shelljs": "^0.8.1",
-    "test-console": "^1.1.0"
-  }
+  "license": "MIT"
 }

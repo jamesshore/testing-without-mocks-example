@@ -1,3 +1,7 @@
 .idea/workspace.xml
-.bin
 generated/
+.bin
+node_modules/keygrip/defaultKeys.json
+src/client/.sass-cache/
+.sass-cache/
+gem_cache/

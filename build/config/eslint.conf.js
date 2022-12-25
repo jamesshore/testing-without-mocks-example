@@ -6,7 +6,7 @@ const IGNORE = "off";
 
 exports.options = {
 	"parserOptions": {
-		"ecmaVersion": 2017
+		"ecmaVersion": 2018
 	},
 
 	"env": {
@@ -89,7 +89,7 @@ exports.options = {
 		"no-use-before-define": [ ERROR, { "functions": false, "classes": false, "variables": false} ],
 
 		// "Stylistic Issues"
-		"new-cap": ERROR,
+		"new-cap": IGNORE,
 		"no-bitwise": ERROR,
 		"no-mixed-spaces-and-tabs": ERROR,
 		"semi": [ ERROR, "always" ],
@@ -103,6 +103,7 @@ exports.options = {
 		"no-duplicate-imports": ERROR,
 		"no-new-symbol": ERROR,
 		"no-this-before-super": ERROR,
+		"no-var": ERROR,
 		"require-yield": ERROR
 	}
 };

@@ -1,47 +1,50 @@
 // Copyright (c) 2015-2018 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 "use strict";
 
-var glob = require("glob");
-var path = require("path");
+const glob = require("glob");
+const path = require("path");
 
 exports.generatedDir = "generated";
-exports.tempTestfileDir = `${exports.generatedDir}/test`;
 exports.incrementalDir = `${exports.generatedDir}/incremental`;
 
-exports.lintFiles = function() {
+exports.lintFiles = memoize(() => {
 	return deglob([
+		"*.js",
 		"build/**/*.js",
-		"build/**/*.jakefile",
 		"src/**/*.js",
+	], [
 	]);
-};
+});
 
-exports.lintOutput = function() {
+exports.lintOutput = memoize(() => {
 	return exports.lintFiles().map(function(pathname) {
 		return `${exports.incrementalDir}/lint/${pathname}.lint`;
 	});
-};
+});
 
-exports.lintDirectories = function() {
+exports.lintDirectories = memoize(() => {
 	return exports.lintOutput().map(function(lintDependency) {
 		return path.dirname(lintDependency);
 	});
-};
+});
 
-exports.serverCoreTestFiles = function() {
+exports.testFiles = memoize(() => {
 	return deglob([
-		"src/_*_test.js",
+		"src/**/_*_test.js",
+	], [
 	]);
-};
+});
 
-exports.serverCoreTestDependencies = function() {
+exports.testDependencies = memoize(() => {
 	return deglob([
-		"src/*.js",
+		"src/**/*.js",
+	], [
 	]);
-};
+});
 
-function deglob(patternsToFind, patternsToIgnore) {
-	var globPattern = patternsToFind;
+
+const deglob = exports.deglob = function(patternsToFind, patternsToIgnore) {
+	let globPattern = patternsToFind;
 	if (Array.isArray(patternsToFind)) {
 		if (patternsToFind.length === 1) {
 			globPattern = patternsToFind[0];
@@ -52,4 +55,16 @@ function deglob(patternsToFind, patternsToIgnore) {
 	}
 
 	return glob.sync(globPattern, { ignore: patternsToIgnore });
+};
+
+
+// Cache function results for performance
+function memoize(fn) {
+	let cache;
+	return function() {
+		if (cache === undefined) {
+			cache = fn();
+		}
+		return cache;
+	};
 }
