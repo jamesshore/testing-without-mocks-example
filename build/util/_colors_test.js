@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
-const assert = require("./assert.cjs");
-const colors = require("./colors.cjs");
+import assert from "./assert.cjs";
+import colors from "./colors.cjs";
 
 describe("Colors", () => {
 
