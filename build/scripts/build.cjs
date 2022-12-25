@@ -1,18 +1,18 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-require("../util/node_version_checker").check();
+require("../util/node_version_checker.cjs").check();
 
-const Build = require("../util/build_runner");
-const DependencyAnalysis = require("../util/dependency_analysis");
-const paths = require("../config/paths");
-const lint = require("../util/lint_runner");
-const lintConfig = require("../config/eslint.conf");
+const Build = require("../util/build_runner.cjs");
+const DependencyAnalysis = require("../util/dependency_analysis.cjs");
+const paths = require("../config/paths.cjs");
+const lint = require("../util/lint_runner.cjs");
+const lintConfig = require("../config/eslint.conf.cjs");
 const pathLib = require("path");
 const shell = require("shelljs"); shell.config.fatal = true;
-const mochaRunner = require("../util/mocha_runner");
-const mochaConfig = require("../config/mocha.conf");
-const { brightRed, brightGreen } = require("../util/colors");
+const mochaRunner = require("../util/mocha_runner.cjs");
+const mochaConfig = require("../config/mocha.conf.cjs");
+const { brightRed, brightGreen } = require("../util/colors.cjs");
 
 const rootDir = pathLib.resolve(__dirname, "../..");
 

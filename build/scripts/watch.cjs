@@ -7,12 +7,12 @@
 
 "use strict";
 
-const build = require("./build");
+const build = require("./build.cjs");
 const gaze = require("gaze");
 const pathLib = require("path");
-const paths = require("../config/paths");
+const paths = require("../config/paths.cjs");
 const sound = require("sound-play");
-const { cyan, brightRed } = require("../util/colors");
+const { cyan, brightRed } = require("../util/colors.cjs");
 
 const watchColor = cyan;
 const errorColor = brightRed.inverse;

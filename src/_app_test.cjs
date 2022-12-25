@@ -1,10 +1,10 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const assert = require("./util/assert");
-const CommandLine = require("./infrastructure/command_line");
-const rot13 = require("./logic/rot13");
-const App = require("./app");
+const assert = require("./util/assert.cjs");
+const CommandLine = require("./infrastructure/command_line.cjs");
+const rot13 = require("./logic/rot13.cjs");
+const App = require("./app.cjs");
 
 describe("App", function() {
 

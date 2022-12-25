@@ -7,20 +7,20 @@
 
 "use strict";
 
-require("../util/node_version_checker").check();
+require("../util/node_version_checker.cjs").check();
 
 const gaze = require("gaze");
 const pathLib = require("path");
 const spawn = require("child_process").spawn;
-const paths = require("../config/paths");
+const paths = require("../config/paths.cjs");
 const sound = require("sound-play");
-const { cyan, brightRed } = require("../util/colors");
+const { cyan, brightRed } = require("../util/colors.cjs");
 
 const watchColor = cyan;
 const errorColor = brightRed.inverse;
 
 const COMMAND = "node";
-const SERVE_JS = "src/serve.js";
+const SERVE_JS = "src/serve.cjs";
 const SERVE_FULL_PATH = pathLib.resolve(__dirname, "../..", SERVE_JS);
 const COMMAND_ARGS = process.argv.slice(2);
 

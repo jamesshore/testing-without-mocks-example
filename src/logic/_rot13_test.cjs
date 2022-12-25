@@ -1,8 +1,8 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const assert = require("../util/assert");
-const rot13 = require("./rot13");
+const assert = require("../util/assert.cjs");
+const rot13 = require("./rot13.cjs");
 
 describe("ROT-13", function() {
 

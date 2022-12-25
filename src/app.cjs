@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const rot13 = require("./logic/rot13");
+const rot13 = require("./logic/rot13.cjs");
 
 module.exports = class App {
 

@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const build = require("./build");
+const build = require("./build.cjs");
 
 build.runAsync(process.argv.slice(2)).then((failedTask) => {
 	if (failedTask === null) process.exit(0);

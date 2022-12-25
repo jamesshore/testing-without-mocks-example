@@ -1,4 +1,4 @@
 #!/bin/sh
 
 . build/scripts/prebuild.sh
-node src/run.js $*
+node src/run.cjs $*

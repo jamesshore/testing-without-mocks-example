@@ -1,8 +1,8 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const assert = require("./assert");
-const colors = require("./colors");
+const assert = require("./assert.cjs");
+const colors = require("./colors.cjs");
 
 describe("Colors", () => {
 

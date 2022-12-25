@@ -2,7 +2,7 @@
 "use strict";
 
 const child_process = require("child_process");
-const { cyan } = require("../util/colors");
+const { cyan } = require("./colors.cjs");
 
 exports.runAsync = function(command, args) {
 	const argsString = args.map(arg => {

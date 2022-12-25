@@ -1,10 +1,10 @@
 // Copyright Titanium I.T. LLC.
 "use strict";
 
-const repo = require("../util/repo");
-const branches = require("../config/branches");
+const repo = require("../util/repo.cjs");
+const branches = require("../config/branches.cjs");
 const pathLib = require("path");
-const { brightRed, brightGreen, brightWhite } = require("../util/colors");
+const { brightRed, brightGreen, brightWhite } = require("../util/colors.cjs");
 
 runAsync();
 

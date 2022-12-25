@@ -19,20 +19,20 @@ exports.watchRestartFiles = memoizedDeglob([
 
 exports.lintFiles = memoizedDeglob([
 	"*.js",
-	"build/**/*.js",
-	"src/**/*.js",
+	"build/**/*.cjs",
+	"src/**/*.cjs",
 ]);
 
 exports.testFiles = memoizedDeglob([
-	"build/**/_*_test.js",
-	"src/**/_*_test.js",
+	"build/**/_*_test.cjs",
+	"src/**/_*_test.cjs",
 ]);
 
 exports.testDependencies = memoizedDeglob([
-	"build/**/*.js",
-	"src/**/*.js",
+	"build/**/*.cjs",
+	"src/**/*.cjs",
 ], [
-	"build/util/dependency_analysis.js"
+	"build/util/dependency_analysis.cjs"
 ]);
 
 
