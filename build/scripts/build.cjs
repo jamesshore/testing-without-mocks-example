@@ -1,7 +1,5 @@
 // Copyright Titanium I.T. LLC.
 
-require("../util/node_version_checker.cjs").check();
-
 const Build = require("../util/build_runner.cjs");
 const DependencyAnalysis = require("../util/dependency_analysis.cjs");
 const paths = require("../config/paths.cjs");

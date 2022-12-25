@@ -10,12 +10,12 @@ const gaze = require("gaze");
 const pathLib = require("path");
 const paths = require("../config/paths.cjs");
 const sound = require("sound-play");
+const sh = require("../util/sh.cjs");
 const { cyan, brightRed } = require("../util/colors.cjs");
 
 const watchColor = cyan;
 const errorColor = brightRed.inverse;
-
-const RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB = 512;
+const buildScript = pathLib.resolve(__dirname, "../scripts/run_build.cjs");
 
 const args = process.argv.slice(2);
 let buildRunning = false;
@@ -60,24 +60,15 @@ async function triggerBuild(event, filepath) {
 }
 
 async function runBuild() {
-	if (process.memoryUsage().rss > RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB * 1024 * 1024) {
-		process.stdout.write(watchColor(`Memory usage exceeds ${RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB} MiB: `));
-		restart();
-	}
-
 	do {
 		buildQueued = false;
 		buildRunning = true;
 		buildStartedAt = Date.now();
 		console.log(watchColor(`\n\n\n\n*** BUILD> ${args.join(" ")}`));
 
+		const { code } = await sh.runAsync("node", [ buildScript, ...args ]);
+		alertBuildResult(code);
 
-		global.buildStart = Date.now();
-
-		const buildResult = await build.runAsync(args);
-		alertBuildResult(buildResult);
-
-		flushCaches();
 		buildRunning = false;
 	} while (buildQueued);
 }
@@ -95,22 +86,17 @@ function queueAnotherBuild() {
 	}
 }
 
-function alertBuildResult(buildResult) {
-	if (buildResult === null) {
-		playSoundAsync("../sounds/success.wav");
-	}
-	else if (buildResult === "lint") {
-		playSoundAsync("../sounds/lint_error.wav");
-	}
-	else {
-		playSoundAsync("../sounds/fail.wav");
-	}
-}
+function alertBuildResult(exitCode) {
+	playSoundAsync(pathForCode(exitCode));
 
-function flushCaches() {
-	Object.keys(require.cache).forEach((key) => {
-		delete require.cache[key];
-	});
+	function pathForCode(exitCode) {
+		switch (exitCode) {
+			case 0: return "../sounds/success.wav";
+			case 1: return "../sounds/lint_error.wav";
+			case 2: return "../sounds/fail.wav";
+			default: throw new Error(`Unrecognized exit code from build: ${exitCode}`);
+		}
+	}
 }
 
 async function cleanAndRestart(event, filepath) {
