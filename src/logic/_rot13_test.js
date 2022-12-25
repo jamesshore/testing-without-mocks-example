@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
-const assert = require("../util/assert.cjs");
-const rot13 = require("./rot13.cjs");
+import assert from "../util/assert.cjs";
+import rot13 from "./rot13.cjs";
 
 describe("ROT-13", function() {
 
