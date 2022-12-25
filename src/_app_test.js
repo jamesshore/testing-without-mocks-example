@@ -1,9 +1,9 @@
 // Copyright Titanium I.T. LLC.
 
-const assert = require("./util/assert.cjs");
-const CommandLine = require("./infrastructure/command_line.cjs");
-const rot13 = require("./logic/rot13.cjs");
-const App = require("./app.cjs");
+import assert from "./util/assert.cjs";
+import CommandLine from "./infrastructure/command_line.cjs";
+import rot13 from "./logic/rot13.cjs";
+import App from "./app.cjs";
 
 describe("App", function() {
 
