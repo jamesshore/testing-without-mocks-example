@@ -1,20 +1,20 @@
 // Copyright Titanium I.T. LLC.
 
-const assert = require("../util/assert.cjs");
-const childProcess = require("child_process");
-const path = require("path");
-const CommandLine = require("./command_line.cjs");
+import assert from "../util/assert.cjs";
+import childProcess from "node:child_process";
+import CommandLine from "./command_line.cjs";
+import { pathToFile } from "../util/modulePaths.js";
 
 describe("CommandLine", function() {
 
 	it("provides command-line arguments", async function() {
 		const args = [ "my arg 1", "my arg 2" ];
-		const stdout = await runModuleAsync("./_command_line_test_args_runner.cjs", args);
+		const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
 		assert.equal(stdout, '["my arg 1","my arg 2"]');
 	});
 
 	it("writes output", async function() {
-		const stdout = await runModuleAsync("./_command_line_test_output_runner.cjs");
+		const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
 		assert.equal(stdout, "my output");
 	});
 
@@ -43,7 +43,7 @@ describe("CommandLine", function() {
 		});
 
 		it("doesn't write output to command line", async function() {
-			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.cjs");
+			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
 			assert.equal(stdout, "");
 		});
 
@@ -53,7 +53,7 @@ describe("CommandLine", function() {
 
 function runModuleAsync(relativeModulePath, args) {
 	return new Promise((resolve, reject) => {
-		const absolutePath = path.resolve(__dirname, relativeModulePath);
+		const absolutePath = pathToFile(import.meta.url, relativeModulePath);
 		const options = {
 			stdio: "pipe",
 		};
