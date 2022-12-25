@@ -1,8 +1,8 @@
 // Copyright Titanium I.T. LLC.
 
-const rot13 = require("./logic/rot13.cjs");
+import rot13 from "./logic/rot13.cjs";
 
-module.exports = class App {
+export default class App {
 
 	static create(commandLine) {
 		return new App(commandLine);
@@ -28,4 +28,4 @@ module.exports = class App {
 		this._commandLine.writeOutput(output + "\n");
 	}
 
-};
+}
