@@ -1,5 +1,4 @@
 // Copyright (c) 2012-2018 Titanium I.T. LLC. All rights reserved. See LICENSE.txt for details.
-"use strict";
 
 const eslint = require("eslint");
 const linter = new (eslint).Linter();

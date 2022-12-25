@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 exports.transform = function(input) {
 	if (input === undefined || typeof input !== "string") throw new Error("Expected string parameter");

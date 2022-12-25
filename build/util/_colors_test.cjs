@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 const assert = require("./assert.cjs");
 const colors = require("./colors.cjs");

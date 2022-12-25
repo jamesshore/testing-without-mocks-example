@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 const repo = require("../util/repo.cjs");
 const branches = require("../config/branches.cjs");

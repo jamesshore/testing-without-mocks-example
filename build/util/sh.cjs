@@ -1,5 +1,4 @@
 // Copyright (c) 2012 Titanium I.T. LLC. All rights reserved. See LICENSE.txt for details.
-"use strict";
 
 const child_process = require("child_process");
 const { cyan } = require("./colors.cjs");

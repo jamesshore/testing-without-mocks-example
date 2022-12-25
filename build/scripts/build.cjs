@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 require("../util/node_version_checker.cjs").check();
 

@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 const COLOR_STYLES = {
 	bold: "1;",

@@ -5,8 +5,6 @@
 // Thanks to Davide Alberto Molin for inspiring this code.
 // See https://www.letscodejavascript.com/v3/comments/live/7 for details.
 
-"use strict";
-
 require("../util/node_version_checker.cjs").check();
 
 const gaze = require("gaze");

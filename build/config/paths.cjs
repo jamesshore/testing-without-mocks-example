@@ -1,5 +1,4 @@
 // Copyright (c) 2015-2018 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
-"use strict";
 
 const glob = require("glob");
 

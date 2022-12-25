@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 const parseArgs = require("minimist");
 const pathLib = require("path");

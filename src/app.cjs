@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-"use strict";
 
 const rot13 = require("./logic/rot13.cjs");
 

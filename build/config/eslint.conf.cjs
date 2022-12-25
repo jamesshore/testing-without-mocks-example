@@ -1,12 +1,12 @@
 // Copyright Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
-"use strict";
 
 const ERROR = "error";
 const IGNORE = "off";
 
 exports.options = {
 	"parserOptions": {
-		"ecmaVersion": 2020
+		"ecmaVersion": 2020,
+		"sourceType": "module",
 	},
 
 	"env": {
