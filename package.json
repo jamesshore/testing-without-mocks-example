@@ -14,7 +14,8 @@
     "glob": "^8.0.3",
     "minimist": "^1.2.7",
     "mocha": "^10.2.0",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "sound-play": "^1.1.0"
   },
   "scripts": {
     "test": "./build.sh",

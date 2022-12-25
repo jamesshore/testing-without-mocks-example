@@ -10,37 +10,38 @@
 const build = require("./build");
 const gaze = require("gaze");
 const pathLib = require("path");
-const sh = require("../util/sh");
+const paths = require("../config/paths");
+const sound = require("sound-play");
+const { cyan, brightRed } = require("../util/colors");
 
-const BUILD_FILES = [
-	"build/**/*",
-];
-const SOURCE_FILES = [
-	"src/**/*",
-];
+const watchColor = cyan;
+const errorColor = brightRed.inverse;
+
+const RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB = 512;
 
 const args = process.argv.slice(2);
 let buildRunning = false;
 let buildQueued = false;
 let buildStartedAt;
 
-gaze(BUILD_FILES, (err, watcher) => {
+process.stdout.write("Starting file watcher: ");
+gaze(paths.watchRestartFiles(), (err, watcher) => {
 	if (err) {
-		console.log("WATCH ERROR:", err);
+		console.log(errorColor("WATCH ERROR:"), err);
 		return;
 	}
 	watcher.on("all", () => {
-		console.log("*** Build files changed");
+		console.log(watchColor("*** Build files changed"));
 		restart();
 	});
 });
 
-gaze(SOURCE_FILES, function(err, watcher) {
+gaze(paths.watchFiles(), function(err, watcher) {
 	if (err) {
-		console.log("WATCH ERROR:", err);
+		console.log(errorColor("WATCH ERROR:"), err);
 		return;
 	}
-	console.log(`Watching ${SOURCE_FILES.join(", ")}`);
+	console.log(".\n");
 
 	watcher.on("changed", triggerBuild.bind(null, "changed"));
 	watcher.on("deleted", cleanAndRestart.bind(null, "deleted"));
@@ -61,11 +62,17 @@ async function triggerBuild(event, filepath) {
 }
 
 async function runBuild() {
+	if (process.memoryUsage().rss > RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB * 1024 * 1024) {
+		process.stdout.write(watchColor(`Memory usage exceeds ${RESTART_WHEN_MEMORY_USAGE_EXCEEDS_MIB} MiB: `));
+		restart();
+	}
+
 	do {
 		buildQueued = false;
 		buildRunning = true;
 		buildStartedAt = Date.now();
-		console.log(`\n\n\n\n*** BUILD> ${args.join(" ")}`);
+		console.log(watchColor(`\n\n\n\n*** BUILD> ${args.join(" ")}`));
+
 
 		global.buildStart = Date.now();
 
@@ -81,7 +88,7 @@ function queueAnotherBuild() {
 	if (buildQueued) return;
 	if (debounce()) return;
 
-	console.log("*** Build queued");
+	console.log(watchColor("*** Build queued"));
 	buildQueued = true;
 
 	function debounce() {
@@ -104,10 +111,7 @@ function alertBuildResult(buildResult) {
 
 function flushCaches() {
 	Object.keys(require.cache).forEach((key) => {
-		const srcDirPrefix = pathLib.resolve("./src") + pathLib.sep;
-		const nodeModulesPrefix = pathLib.resolve("./node_modules") + pathLib.sep;
-
-		if (key.startsWith(srcDirPrefix) || key.startsWith(nodeModulesPrefix)) delete require.cache[key];
+		delete require.cache[key];
 	});
 }
 
@@ -126,22 +130,15 @@ function logEvent(event, filepath) {
 	if (filepath === undefined) return;
 
 	const truncatedPath = pathLib.basename(pathLib.dirname(filepath)) + "/" + pathLib.basename(filepath);
-	console.log(`*** ${event.toUpperCase()}: ${truncatedPath}`);
+	console.log(watchColor(`*** ${event.toUpperCase()}: ${truncatedPath}`));
 }
 
 async function playSoundAsync(filename) {
 	try {
 		const path = pathLib.resolve(__dirname, filename);
-		if(process.platform === 'win32'){
-			// If on Windows create a Media.SoundPlayer .Net object to play the sound, it is invoked through powershell
-			// note that Media.SoundPlayer has a restriction of only working on .wav files.
-			await sh.runSilentlyAsync(`powershell`,['-c',`(New-Object Media.SoundPlayer "${path}").PlaySync();`]);
-		} else {
-			// Designed for MacOS, which has built-in 'afplay' command
-			await sh.runSilentlyAsync("afplay", [ path ]);
-		}
+		await sound.play(path, 0.3);
 	}
 	catch (err) {
-		// If audio player isn't found, just ignore it
+		// If something goes wrong, just ignore it
 	}
 }

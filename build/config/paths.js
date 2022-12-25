@@ -2,48 +2,58 @@
 "use strict";
 
 const glob = require("glob");
-const path = require("path");
 
 exports.generatedDir = "generated";
 exports.incrementalDir = `${exports.generatedDir}/incremental`;
 
-exports.lintFiles = memoize(() => {
-	return deglob([
-		"*.js",
-		"build/**/*.js",
-		"src/**/*.js",
-	], [
-	]);
-});
+exports.watchFiles = memoizedDeglob([
+	"build/**/*",
+	"src/**/*",
+]);
 
-exports.lintOutput = memoize(() => {
-	return exports.lintFiles().map(function(pathname) {
-		return `${exports.incrementalDir}/lint/${pathname}.lint`;
+exports.watchRestartFiles = memoizedDeglob([
+	"build/**/*",
+], [
+	"build/node_modules/**/*",
+]);
+
+exports.lintFiles = memoizedDeglob([
+	"*.js",
+	"build/**/*.js",
+	"src/**/*.js",
+]);
+
+exports.testFiles = memoizedDeglob([
+	"build/**/_*_test.js",
+	"src/**/_*_test.js",
+]);
+
+exports.testDependencies = memoizedDeglob([
+	"build/**/*.js",
+	"src/**/*.js",
+], [
+	"build/util/dependency_analysis.js"
+]);
+
+
+function memoizedDeglob(patternsToFind, patternsToIgnore) {
+	return memoize(() => {
+		return deglob(patternsToFind, patternsToIgnore);
 	});
-});
+}
 
-exports.lintDirectories = memoize(() => {
-	return exports.lintOutput().map(function(lintDependency) {
-		return path.dirname(lintDependency);
-	});
-});
+// Cache function results for performance
+function memoize(fn) {
+	let cache;
+	return function() {
+		if (cache === undefined) {
+			cache = fn();
+		}
+		return cache;
+	};
+}
 
-exports.testFiles = memoize(() => {
-	return deglob([
-		"src/**/_*_test.js",
-	], [
-	]);
-});
-
-exports.testDependencies = memoize(() => {
-	return deglob([
-		"src/**/*.js",
-	], [
-	]);
-});
-
-
-const deglob = exports.deglob = function(patternsToFind, patternsToIgnore) {
+function deglob(patternsToFind, patternsToIgnore) {
 	let globPattern = patternsToFind;
 	if (Array.isArray(patternsToFind)) {
 		if (patternsToFind.length === 1) {
@@ -55,16 +65,4 @@ const deglob = exports.deglob = function(patternsToFind, patternsToIgnore) {
 	}
 
 	return glob.sync(globPattern, { ignore: patternsToIgnore });
-};
-
-
-// Cache function results for performance
-function memoize(fn) {
-	let cache;
-	return function() {
-		if (cache === undefined) {
-			cache = fn();
-		}
-		return cache;
-	};
 }

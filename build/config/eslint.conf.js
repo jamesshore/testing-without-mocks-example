@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
+// Copyright Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 "use strict";
 
 const ERROR = "error";
@@ -6,11 +6,10 @@ const IGNORE = "off";
 
 exports.options = {
 	"parserOptions": {
-		"ecmaVersion": 2018
+		"ecmaVersion": 2020
 	},
 
 	"env": {
-		"browser": true,
 		"node": true,
 		"commonjs": true,
 		"mocha": true
@@ -77,7 +76,7 @@ exports.options = {
 		"no-with": ERROR,
 		"prefer-promise-reject-errors": ERROR,
 		"radix": ERROR,
-		"require-await": ERROR,
+		"require-await": IGNORE,
 
 		// "Strict Mode"
 		"strict": [ ERROR, "safe" ],
@@ -91,7 +90,7 @@ exports.options = {
 		// "Stylistic Issues"
 		"new-cap": IGNORE,
 		"no-bitwise": ERROR,
-		"no-mixed-spaces-and-tabs": ERROR,
+		"no-mixed-spaces-and-tabs": IGNORE,
 		"semi": [ ERROR, "always" ],
 
 		// "ECMAScript 6"

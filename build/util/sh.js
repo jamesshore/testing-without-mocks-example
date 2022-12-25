@@ -2,9 +2,16 @@
 "use strict";
 
 const child_process = require("child_process");
+const { cyan } = require("../util/colors");
 
 exports.runAsync = function(command, args) {
-	console.log(`> ${command} ${args.join(" ")}`);
+	const argsString = args.map(arg => {
+		arg = arg.replaceAll('"', '\\"');
+		if (arg.includes(" ")) return `"${arg}"`;
+		else return arg;
+	}).join(" ");
+	console.log(cyan(`» ${command} ${argsString}`));
+
 	return new Promise((resolve, reject) => {
 		let stdout = "";
 		const child = child_process.spawn(command, args);

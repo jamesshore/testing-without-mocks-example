@@ -48,7 +48,8 @@ module.exports = class Build {
 	}
 
 	task(name, fn) {
-		this._taskFns[name] = fn;
+		if (this._taskFns[name] === undefined) this._taskFns[name] = fn;
+		else throw new Error(`Task already defined: ${name}`);
 	}
 
 	incrementalTask(taskName, sourceFiles, fn) {
@@ -78,19 +79,35 @@ module.exports = class Build {
 		}
 	}
 
+	async isNewerThanAsync(file, timestamp) {
+		const fileStats = await statAsync(file);
+		return fileStats.mtime > timestamp;
+	}
+
+	async readFileAsync(file) {
+		const fileContents = await (promisify(fs.readFile))(file);
+		return fileContents.toString();
+	}
+
 	async writeDirAndFileAsync(file, contents) {
 		const dir = pathLib.dirname(file);
 		await mkdirAsync(dir, { recursive: true });
 		await writeFileAsync(file, contents);
 	}
 
+	rootRelativePath(rootDir, fullyQualifiedFilename) {
+		return fullyQualifiedFilename.replace(`${rootDir}/`, "");
+	}
+
 };
 
 function showHelp(taskFns) {
 	const name = pathLib.basename(process.argv[1]).split(".")[0];
-	console.log(`usage: ${name} [-h|--help|-T|--tasks] [--perf] <tasks>`);
+	console.log(`usage: ${name} [-h|--help|-T|--tasks] <tasks>`);
 	console.log("--help  This message");
-	console.log();
-	console.log("Available tasks:");
-	Object.keys(taskFns).forEach((task) => console.log(`  ${task}`));
+	if (taskFns !== undefined) {
+		console.log();
+		console.log("Available tasks:");
+		Object.keys(taskFns).forEach((task) => console.log(`  ${task}`));
+	}
 }
