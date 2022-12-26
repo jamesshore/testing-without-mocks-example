@@ -9,7 +9,7 @@ import gaze from "gaze";
 import pathLib from "path";
 import * as paths from "../config/paths.js";
 import sound from "sound-play";
-import sh from "../util/sh.cjs";
+import * as sh from "../util/sh.js";
 import Colors from "../util/colors.cjs";
 import { pathToFile } from "../util/modulePaths.js";
 

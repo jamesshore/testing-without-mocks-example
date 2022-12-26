@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-const sh = require("./sh.cjs");
+const sh = require("./sh.js");
 
 // Functions to do things to the git repository
 
