@@ -37,7 +37,7 @@ describe("CommandLine", () => {
 
 	});
 
-	
+
 	describe("Nullable", () => {
 
 		it("doesn't write to stdout", async () => {

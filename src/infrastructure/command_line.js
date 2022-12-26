@@ -6,8 +6,10 @@ export default class CommandLine {
 		return new CommandLine(process);
 	}
 
-	static createNull({ args = [] } = {}) {
-		return new CommandLine(new NullProcess(args));
+	static createNull({
+		args = [],
+	} = {}) {
+		return new CommandLine(new StubbedProcess(args));
 	}
 
 	constructor(proc) {
@@ -30,19 +32,19 @@ export default class CommandLine {
 }
 
 
-class NullProcess {
+class StubbedProcess {
 
 	constructor(args) {
 		this._args = args;
 	}
 
 	get argv() {
-		return [ "null_process_node", "null_process_script.js", ...this._args ];
+		return [ "stubbed_process_node", "stubbed_process_script.js", ...this._args ];
 	}
 
 	get stdout() {
 		return {
-			write() {}
+			write() {},
 		};
 	}
 
