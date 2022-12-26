@@ -37,7 +37,7 @@ describe("CommandLine", () => {
 	describe("nullability", () => {
 
 		it("doesn't write to stdout", async () => {
-			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
+			const stdout = await runModuleAsync("./_command_line_test_nulled_output_runner.js");
 			assert.equal(stdout, "");
 		});
 
