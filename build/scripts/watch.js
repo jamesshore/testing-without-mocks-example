@@ -7,7 +7,7 @@
 
 import gaze from "gaze";
 import pathLib from "path";
-import paths from "../config/paths.cjs";
+import * as paths from "../config/paths.js";
 import sound from "sound-play";
 import sh from "../util/sh.cjs";
 import Colors from "../util/colors.cjs";

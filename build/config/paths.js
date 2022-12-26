@@ -1,22 +1,22 @@
 // Copyright (c) 2015-2018 Titanium I.T. LLC. All rights reserved. For license, see "README" or "LICENSE" file.
 
-const glob = require("glob");
+import glob from "glob";
 
-exports.generatedDir = "generated";
-exports.incrementalDir = `${exports.generatedDir}/incremental`;
+export const generatedDir = "generated";
+export const incrementalDir = `${generatedDir}/incremental`;
 
-exports.watchFiles = memoizedDeglob([
+export const watchFiles = memoizedDeglob([
 	"build/**/*",
 	"src/**/*",
 ]);
 
-exports.watchRestartFiles = memoizedDeglob([
+export const watchRestartFiles = memoizedDeglob([
 	"build/**/*",
 ], [
 	"build/node_modules/**/*",
 ]);
 
-exports.lintFiles = memoizedDeglob([
+export const lintFiles = memoizedDeglob([
 	"*.js",
 	"build/**/*.cjs",
 	"src/**/*.cjs",
@@ -24,14 +24,14 @@ exports.lintFiles = memoizedDeglob([
 	"src/**/*.js",
 ]);
 
-exports.testFiles = memoizedDeglob([
+export const testFiles = memoizedDeglob([
 	"build/**/_*_test.cjs",
 	"src/**/_*_test.cjs",
 	"build/**/_*_test.js",
 	"src/**/_*_test.js",
 ]);
 
-exports.testDependencies = memoizedDeglob([
+export const testDependencies = memoizedDeglob([
 	"build/**/*.cjs",
 	"src/**/*.cjs",
 	"build/**/*.js",
