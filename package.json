@@ -1,0 +1,27 @@
+{
+  "name": "testing-without-mocks-example",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "18.12.1"
+  },
+  "description": "",
+  "main": "run.js",
+  "type": "module",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "eslint": "^8.30.0",
+    "gaze": "^1.1.3",
+    "glob": "^8.0.3",
+    "minimist": "^1.2.7",
+    "mocha": "^10.2.0",
+    "shelljs": "^0.8.5",
+    "sound-play": "^1.1.0"
+  },
+  "scripts": {
+    "test": "./build.sh",
+    "start": "./run.sh"
+  },
+  "author": "James Shore <jshore@jamesshore.com>",
+  "license": "MIT"
+}
