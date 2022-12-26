@@ -7,7 +7,7 @@ import lint from "../util/lint_runner.cjs";
 import lintConfig from "../config/eslint.conf.js";
 import shell from "shelljs"; shell.config.fatal = true;
 import mochaRunner from "../util/mocha_runner.cjs";
-import mochaConfig from "../config/mocha.conf.cjs";
+import mochaConfig from "../config/mocha.conf.js";
 import Colors from "../util/colors.cjs";
 import { pathToFile } from "../../src/util/modulePaths.js";
 
