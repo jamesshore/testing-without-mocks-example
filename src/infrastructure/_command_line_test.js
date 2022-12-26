@@ -13,15 +13,11 @@ describe("CommandLine", () => {
 			assert.equal(stdout, "my output");
 		});
 
-		it("remembers last output", () => {
-			const commandLine = CommandLine.createNull();
-			commandLine.writeOutput("my last output");
-			assert.equal(commandLine.getLastOutput(), "my last output");
-		});
+		it("tracks output", () => {
+			const { commandLine, output } = createNull();
 
-		it("last output is undefined when nothing has been output yet", () => {
-			const commandLine = CommandLine.createNull();
-			assert.isUndefined(commandLine.getLastOutput());
+			commandLine.writeOutput("my output");
+			assert.equal(output.data, "my output");
 		});
 
 	});
@@ -38,7 +34,7 @@ describe("CommandLine", () => {
 	});
 
 
-	describe("Nullable", () => {
+	describe("nullability", () => {
 
 		it("doesn't write to stdout", async () => {
 			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
@@ -46,12 +42,12 @@ describe("CommandLine", () => {
 		});
 
 		it("defaults to no arguments", () => {
-			const commandLine = CommandLine.createNull();
+			const { commandLine } = createNull();
 			assert.deepEqual(commandLine.args(), []);
 		});
 
 		it("allows arguments to be configured", () => {
-			const commandLine = CommandLine.createNull({ args: [ "one", "two" ] });
+			const { commandLine } = createNull({ args: [ "one", "two" ] });
 			assert.deepEqual(commandLine.args(), [ "one", "two" ]);
 		});
 
@@ -83,4 +79,10 @@ async function runModuleAsync(relativeModulePath, args) {
 			}
 		});
 	});
+}
+
+function createNull(options) {
+	const commandLine = CommandLine.createNull(options);
+	const output = commandLine.trackOutput();
+	return { commandLine, output };
 }

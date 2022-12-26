@@ -30,12 +30,10 @@ function run({
 	args = [],
 } = {}) {
 	const commandLine = CommandLine.createNull({ args });
+	const output = commandLine.trackOutput();
+
 	const app = new App(commandLine);
 	app.run();
 
-	return {
-		output: {
-			data: [ commandLine.getLastOutput() ],
-		},
-	};
+	return { output };
 }
