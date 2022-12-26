@@ -2,14 +2,14 @@
 
 import assert from "./util/assert.js";
 import CommandLine from "./infrastructure/command_line.js";
-import { transform } from "./logic/rot13.js";
+import * as rot13 from "./logic/rot13.js";
 import App from "./app.js";
 
 describe("App", function() {
 
 	it("reads command-line argument, transform it with ROT-13, and write result", function() {
 		const input = "my input";
-		const expectedOutput = transform(input);
+		const expectedOutput = rot13.transform(input);
 
 		const { output } = run({ args: [ input ] });
 		assert.deepEqual(output.data, [ `${expectedOutput}\n` ]);
