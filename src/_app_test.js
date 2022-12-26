@@ -6,7 +6,7 @@ import App from "./app.js";
 
 describe("App", () => {
 
-	it("reads command-line argument, transform it with ROT-13, and write result", () => {
+	it("reads command-line argument, transform it with ROT-13, and writes result", () => {
 		const input = "my input";
 		const expectedOutput = rot13.transform(input);
 
@@ -14,12 +14,12 @@ describe("App", () => {
 		assert.deepEqual(output.data, [ `${expectedOutput}\n` ]);
 	});
 
-	it("writes usage to command-line when no argument provided", () => {
+	it("writes usage when no arguments provided", () => {
 		const { output } = run({ args: [] });
 		assert.deepEqual(output.data, [ "Usage: run text_to_transform\n" ]);
 	});
 
-	it("complains when too many command-line arguments provided", () => {
+	it("complains when too many arguments provided", () => {
 		const { output } = run({ args: [ "a", "b" ] });
 		assert.deepEqual(output.data, [ "too many arguments\n" ]);
 	});
