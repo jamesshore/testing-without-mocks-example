@@ -6,30 +6,44 @@ import { pathToFile } from "../util/modulePaths.js";
 
 describe("CommandLine", () => {
 
-	it("provides command-line arguments", async () => {
-		const args = [ "my arg 1", "my arg 2" ];
-		const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
-		assert.equal(stdout, '["my arg 1","my arg 2"]');
+	describe("output", () => {
+
+		it("writes to stdout", async () => {
+			const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
+			assert.equal(stdout, "my output");
+		});
+
+		it("remembers last output", () => {
+			const commandLine = CommandLine.createNull();
+			commandLine.writeOutput("my last output");
+			assert.equal(commandLine.getLastOutput(), "my last output");
+		});
+
+		it("last output is undefined when nothing has been output yet", () => {
+			const commandLine = CommandLine.createNull();
+			assert.isUndefined(commandLine.getLastOutput());
+		});
+
 	});
 
-	it("writes output", async () => {
-		const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
-		assert.equal(stdout, "my output");
+
+	describe("arguments", () => {
+
+		it("provides command-line arguments", async () => {
+			const args = [ "my arg 1", "my arg 2" ];
+			const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
+			assert.equal(stdout, '["my arg 1","my arg 2"]');
+		});
+
 	});
 
-	it("remembers last output", () => {
-		const commandLine = CommandLine.createNull();
-		commandLine.writeOutput("my last output");
-		assert.equal(commandLine.getLastOutput(), "my last output");
-	});
+	
+	describe("Nullable", () => {
 
-	it("last output is undefined when nothing has been output yet", () => {
-		const commandLine = CommandLine.createNull();
-		assert.isUndefined(commandLine.getLastOutput());
-	});
-
-
-	describe("Nullability", () => {
+		it("doesn't write to stdout", async () => {
+			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
+			assert.equal(stdout, "");
+		});
 
 		it("defaults to no arguments", () => {
 			const commandLine = CommandLine.createNull();
@@ -37,26 +51,18 @@ describe("CommandLine", () => {
 		});
 
 		it("allows arguments to be configured", () => {
-			const commandLine = CommandLine.createNull({ args: [ "one", "two" ]});
+			const commandLine = CommandLine.createNull({ args: [ "one", "two" ] });
 			assert.deepEqual(commandLine.args(), [ "one", "two" ]);
-		});
-
-		it("doesn't write output to command line", async () => {
-			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
-			assert.equal(stdout, "");
 		});
 
 	});
 
 });
 
-function runModuleAsync(relativeModulePath, args) {
-	return new Promise((resolve, reject) => {
+async function runModuleAsync(relativeModulePath, args) {
+	return await new Promise((resolve, reject) => {
 		const absolutePath = pathToFile(import.meta.url, relativeModulePath);
-		const options = {
-			stdio: "pipe",
-		};
-		const child = childProcess.fork(absolutePath, args, options);
+		const child = childProcess.fork(absolutePath, args, { stdio: "pipe" });
 
 		let stdout = "";
 		let stderr = "";
