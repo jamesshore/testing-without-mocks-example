@@ -11,27 +11,32 @@ describe("App", function() {
 		const input = "my input";
 		const expectedOutput = transform(input);
 
-		const commandLine = CommandLine.createNull({ args: [ input ]});
-		const app = App.create(commandLine);
-		app.run();
-		assert.equal(commandLine.getLastOutput(), expectedOutput + "\n");
+		const { output } = run({ args: [ input ] });
+		assert.deepEqual(output.data, [ `${expectedOutput}\n` ]);
 	});
 
 	it("writes usage to command-line when no argument provided", function() {
-		const commandLine = CommandLine.createNull({ args: []});
-		const app = App.create(commandLine);
-
-		app.run();
-		assert.equal(commandLine.getLastOutput(), "Usage: run text_to_transform\n");
+		const { output } = run({ args: [] });
+		assert.deepEqual(output.data, [ "Usage: run text_to_transform\n" ]);
 	});
 
 	it("complains when too many command-line arguments provided", function() {
-		const commandLine = CommandLine.createNull({ args: [ "a", "b" ]});
-		const app = App.create(commandLine);
-
-		app.run();
-		assert.equal(commandLine.getLastOutput(), "too many arguments\n");
+		const { output } = run({ args: [ "a", "b" ] });
+		assert.deepEqual(output.data, [ "too many arguments\n" ]);
 	});
 
 });
 
+function run({
+	args = [],
+} = {}) {
+	const commandLine = CommandLine.createNull({ args });
+	const app = new App(commandLine);
+	app.run();
+
+	return {
+		output: {
+			data: [ commandLine.getLastOutput() ],
+		},
+	};
+}
