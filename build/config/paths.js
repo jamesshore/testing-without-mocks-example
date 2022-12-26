@@ -18,8 +18,6 @@ export const watchRestartFiles = memoizedDeglob([
 
 export const lintFiles = memoizedDeglob([
 	"*.js",
-	"build/**/*.cjs",
-	"src/**/*.cjs",
 	"build/**/*.js",
 	"src/**/*.js",
 ], [
@@ -27,19 +25,14 @@ export const lintFiles = memoizedDeglob([
 ]);
 
 export const testFiles = memoizedDeglob([
-	"build/**/_*_test.cjs",
-	"src/**/_*_test.cjs",
 	"build/**/_*_test.js",
 	"src/**/_*_test.js",
 ]);
 
 export const testDependencies = memoizedDeglob([
-	"build/**/*.cjs",
-	"src/**/*.cjs",
 	"build/**/*.js",
 	"src/**/*.js",
 ], [
-	"build/util/dependency_analysis.cjs",
 	"build/util/dependency_analysis.js",
 ]);
 
