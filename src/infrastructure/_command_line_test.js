@@ -1,63 +1,64 @@
 // Copyright Titanium I.T. LLC.
-
 import assert from "../util/assert.js";
 import childProcess from "node:child_process";
 import CommandLine from "./command_line.js";
 import { pathToFile } from "../util/modulePaths.js";
 
-describe("CommandLine", function() {
+describe("CommandLine", () => {
 
-	it("provides command-line arguments", async function() {
-		const args = [ "my arg 1", "my arg 2" ];
-		const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
-		assert.equal(stdout, '["my arg 1","my arg 2"]');
-	});
+	describe("output", () => {
 
-	it("writes output", async function() {
-		const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
-		assert.equal(stdout, "my output");
-	});
+		it("writes to stdout", async () => {
+			const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
+			assert.equal(stdout, "my output");
+		});
 
-	it("remembers last output", function() {
-		const commandLine = CommandLine.createNull();
-		commandLine.writeOutput("my last output");
-		assert.equal(commandLine.getLastOutput(), "my last output");
-	});
+		it("tracks output", () => {
+			const { commandLine, output } = createNull();
 
-	it("last output is undefined when nothing has been output yet", function() {
-		const commandLine = CommandLine.createNull();
-		assert.isUndefined(commandLine.getLastOutput());
+			commandLine.writeOutput("my output");
+			assert.equal(output.data, "my output");
+		});
+
 	});
 
 
-	describe("Nullability", function() {
+	describe("arguments", () => {
 
-		it("defaults to no arguments", function() {
-			const commandLine = CommandLine.createNull();
+		it("provides command-line arguments", async () => {
+			const args = [ "my arg 1", "my arg 2" ];
+			const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
+			assert.equal(stdout, '["my arg 1","my arg 2"]');
+		});
+
+	});
+
+
+	describe("nullability", () => {
+
+		it("doesn't write to stdout", async () => {
+			const stdout = await runModuleAsync("./_command_line_test_nulled_output_runner.js");
+			assert.equal(stdout, "");
+		});
+
+		it("defaults to no arguments", () => {
+			const { commandLine } = createNull();
 			assert.deepEqual(commandLine.args(), []);
 		});
 
-		it("allows arguments to be configured", function() {
-			const commandLine = CommandLine.createNull({ args: [ "one", "two" ]});
+		it("allows arguments to be configured", () => {
+			const { commandLine } = createNull({ args: [ "one", "two" ] });
 			assert.deepEqual(commandLine.args(), [ "one", "two" ]);
-		});
-
-		it("doesn't write output to command line", async function() {
-			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
-			assert.equal(stdout, "");
 		});
 
 	});
 
 });
 
-function runModuleAsync(relativeModulePath, args) {
-	return new Promise((resolve, reject) => {
+async function runModuleAsync(relativeModulePath, args) {
+	return await new Promise((resolve, reject) => {
 		const absolutePath = pathToFile(import.meta.url, relativeModulePath);
-		const options = {
-			stdio: "pipe",
-		};
-		const child = childProcess.fork(absolutePath, args, options);
+		const child = childProcess.fork(absolutePath, args, { stdio: "pipe" });
 
 		let stdout = "";
 		let stderr = "";
@@ -78,4 +79,10 @@ function runModuleAsync(relativeModulePath, args) {
 			}
 		});
 	});
+}
+
+function createNull(options) {
+	const commandLine = CommandLine.createNull(options);
+	const output = commandLine.trackOutput();
+	return { commandLine, output };
 }

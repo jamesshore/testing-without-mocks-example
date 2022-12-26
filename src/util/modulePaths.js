@@ -1,4 +1,5 @@
-import path  from 'path';
+// Copyright Titanium I.T. LLC.
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 export function pathToFile(moduleUrl, relativeFilePath) {

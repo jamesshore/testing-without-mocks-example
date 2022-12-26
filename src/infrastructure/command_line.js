@@ -1,4 +1,8 @@
 // Copyright Titanium I.T. LLC.
+import OutputTracker from "./output_tracker.js";
+import EventEmitter from "node:events";
+
+const OUTPUT_EVENT = "output";
 
 export default class CommandLine {
 
@@ -6,12 +10,15 @@ export default class CommandLine {
 		return new CommandLine(process);
 	}
 
-	static createNull({ args = [] } = {}) {
-		return new CommandLine(new NullProcess(args));
+	static createNull({
+		args = [],
+	} = {}) {
+		return new CommandLine(new StubbedProcess(args));
 	}
 
 	constructor(proc) {
 		this._process = proc;
+		this._emitter = new EventEmitter();
 	}
 
 	args() {
@@ -20,29 +27,29 @@ export default class CommandLine {
 
 	writeOutput(text) {
 		this._process.stdout.write(text);
-		this._lastOutput = text;
+		this._emitter.emit(OUTPUT_EVENT, text);
 	}
 
-	getLastOutput() {
-		return this._lastOutput;
+	trackOutput() {
+		return OutputTracker.create(this._emitter, OUTPUT_EVENT);
 	}
 
 }
 
 
-class NullProcess {
+class StubbedProcess {
 
 	constructor(args) {
 		this._args = args;
 	}
 
 	get argv() {
-		return [ "null_process_node", "null_process_script.js", ...this._args ];
+		return [ "stubbed_process_node", "stubbed_process_script.js", ...this._args ];
 	}
 
 	get stdout() {
 		return {
-			write() {}
+			write() {},
 		};
 	}
 

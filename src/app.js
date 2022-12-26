@@ -1,11 +1,11 @@
 // Copyright Titanium I.T. LLC.
-
-import { transform } from "./logic/rot13.js";
+import * as rot13 from "./logic/rot13.js";
+import CommandLine from "./infrastructure/command_line.js";
 
 export default class App {
 
-	static create(commandLine) {
-		return new App(commandLine);
+	static create() {
+		return new App(CommandLine.create());
 	}
 
 	constructor(commandLine) {
@@ -24,7 +24,7 @@ export default class App {
 		}
 
 		const input = args[0];
-		const output = transform(input);
+		const output = rot13.transform(input);
 		this._commandLine.writeOutput(output + "\n");
 	}
 
