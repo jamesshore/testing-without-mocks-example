@@ -1,0 +1,1 @@
+export { pathToFile } from "../../src/util/modulePaths.js";
