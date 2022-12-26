@@ -4,12 +4,14 @@ import Build from "../util/build_runner.cjs";
 import DependencyAnalysis from "../util/dependency_analysis.cjs";
 import paths from "../config/paths.cjs";
 import lint from "../util/lint_runner.cjs";
-import lintConfig from "../config/eslint.conf.cjs";
+import lintConfig from "../config/eslint.conf.js";
 import shell from "shelljs"; shell.config.fatal = true;
 import mochaRunner from "../util/mocha_runner.cjs";
 import mochaConfig from "../config/mocha.conf.cjs";
 import Colors from "../util/colors.cjs";
 import { pathToFile } from "../../src/util/modulePaths.js";
+
+console.log("LINT", lintConfig);
 
 const successColor = Colors.brightGreen;
 const failureColor = Colors.brightRed;
@@ -55,7 +57,7 @@ build.task("lint", async () => {
 		process.stdout.write(header);
 		header = "";
 		footer = "\n";
-		const success = await lint.validateFileAsync(lintFile, lintConfig.options);
+		const success = await lint.validateFileAsync(lintFile, lintConfig);
 		if (success) build.writeDirAndFileAsync(lintDependency, "lint ok");
 
 		return success;

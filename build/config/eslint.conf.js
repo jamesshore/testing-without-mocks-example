@@ -3,7 +3,7 @@
 const ERROR = "error";
 const IGNORE = "off";
 
-exports.options = {
+export default {
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module",
