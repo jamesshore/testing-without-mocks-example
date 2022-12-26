@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
 import Build from "../util/build_runner.js";
-import DependencyAnalysis from "../util/dependency_analysis.cjs";
+import DependencyAnalysis from "../util/dependency_analysis.js";
 import * as paths from "../config/paths.js";
 import * as lint from "../util/lint_runner.js";
 import lintConfig from "../config/eslint.conf.js";
