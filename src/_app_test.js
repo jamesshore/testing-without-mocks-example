@@ -4,9 +4,9 @@ import CommandLine from "./infrastructure/command_line.js";
 import * as rot13 from "./logic/rot13.js";
 import App from "./app.js";
 
-describe("App", function() {
+describe("App", () => {
 
-	it("reads command-line argument, transform it with ROT-13, and write result", function() {
+	it("reads command-line argument, transform it with ROT-13, and write result", () => {
 		const input = "my input";
 		const expectedOutput = rot13.transform(input);
 
@@ -14,12 +14,12 @@ describe("App", function() {
 		assert.deepEqual(output.data, [ `${expectedOutput}\n` ]);
 	});
 
-	it("writes usage to command-line when no argument provided", function() {
+	it("writes usage to command-line when no argument provided", () => {
 		const { output } = run({ args: [] });
 		assert.deepEqual(output.data, [ "Usage: run text_to_transform\n" ]);
 	});
 
-	it("complains when too many command-line arguments provided", function() {
+	it("complains when too many command-line arguments provided", () => {
 		const { output } = run({ args: [ "a", "b" ] });
 		assert.deepEqual(output.data, [ "too many arguments\n" ]);
 	});

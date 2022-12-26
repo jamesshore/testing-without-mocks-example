@@ -4,44 +4,44 @@ import childProcess from "node:child_process";
 import CommandLine from "./command_line.js";
 import { pathToFile } from "../util/modulePaths.js";
 
-describe("CommandLine", function() {
+describe("CommandLine", () => {
 
-	it("provides command-line arguments", async function() {
+	it("provides command-line arguments", async () => {
 		const args = [ "my arg 1", "my arg 2" ];
 		const stdout = await runModuleAsync("./_command_line_test_args_runner.js", args);
 		assert.equal(stdout, '["my arg 1","my arg 2"]');
 	});
 
-	it("writes output", async function() {
+	it("writes output", async () => {
 		const stdout = await runModuleAsync("./_command_line_test_output_runner.js");
 		assert.equal(stdout, "my output");
 	});
 
-	it("remembers last output", function() {
+	it("remembers last output", () => {
 		const commandLine = CommandLine.createNull();
 		commandLine.writeOutput("my last output");
 		assert.equal(commandLine.getLastOutput(), "my last output");
 	});
 
-	it("last output is undefined when nothing has been output yet", function() {
+	it("last output is undefined when nothing has been output yet", () => {
 		const commandLine = CommandLine.createNull();
 		assert.isUndefined(commandLine.getLastOutput());
 	});
 
 
-	describe("Nullability", function() {
+	describe("Nullability", () => {
 
-		it("defaults to no arguments", function() {
+		it("defaults to no arguments", () => {
 			const commandLine = CommandLine.createNull();
 			assert.deepEqual(commandLine.args(), []);
 		});
 
-		it("allows arguments to be configured", function() {
+		it("allows arguments to be configured", () => {
 			const commandLine = CommandLine.createNull({ args: [ "one", "two" ]});
 			assert.deepEqual(commandLine.args(), [ "one", "two" ]);
 		});
 
-		it("doesn't write output to command line", async function() {
+		it("doesn't write output to command line", async () => {
 			const stdout = await runModuleAsync("./_command_line_test_null_output_runner.js");
 			assert.equal(stdout, "");
 		});
