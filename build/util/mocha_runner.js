@@ -1,8 +1,8 @@
 // Copyright Titanium I.T. LLC.
 
-const Mocha = require("mocha");
+import Mocha from "mocha";
 
-exports.runTestsAsync = async function(options, success, failure) {
+export async function runMochaAsync(options) {
 	await new Promise(async (resolve, reject) => {
 		// Mocha leaks listeners. So prior to running Mocha, we save the current sets of listeners.
 		// Then after running Mocha, we check again and turn off any new ones.
@@ -20,7 +20,7 @@ exports.runTestsAsync = async function(options, success, failure) {
 			else return resolve();
 		});
 	});
-};
+}
 
 function cleanUpListenerLeak(event, preMochaListeners) {
 	const postMochaListeners = process.listeners(event);

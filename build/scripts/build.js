@@ -6,7 +6,7 @@ import * as paths from "../config/paths.js";
 import lint from "../util/lint_runner.cjs";
 import lintConfig from "../config/eslint.conf.js";
 import shell from "shelljs"; shell.config.fatal = true;
-import mochaRunner from "../util/mocha_runner.cjs";
+import { runMochaAsync } from "../util/mocha_runner.js";
 import mochaConfig from "../config/mocha.conf.js";
 import Colors from "../util/colors.cjs";
 import { pathToFile } from "../../src/util/modulePaths.js";
@@ -99,7 +99,7 @@ function allTestsTask(taskName, header, testFiles, testDependencies) {
 
 async function runTestsAsync(header, testFiles) {
 	process.stdout.write(`${header}: `);
-	await mochaRunner.runTestsAsync({
+	await runMochaAsync({
 		files: testFiles,
 		options: mochaConfig,
 	});
