@@ -8,7 +8,7 @@ import lintConfig from "../config/eslint.conf.js";
 import shell from "shelljs"; shell.config.fatal = true;
 import { runMochaAsync } from "../util/mocha_runner.js";
 import mochaConfig from "../config/mocha.conf.js";
-import Colors from "../util/colors.cjs";
+import Colors from "../util/colors.js";
 import { pathToFile } from "../../src/util/modulePaths.js";
 
 const successColor = Colors.brightGreen;

@@ -1,6 +1,6 @@
 // Copyright (c) 2013-2017 Titanium I.T. LLC. All rights reserved. See LICENSE.TXT for details.
 
-import Colors from "./colors.cjs";
+import Colors from "./colors.js";
 import packageJson from "../../package.json" assert { type: "json" };
 
 export function checkNodeVersion() {

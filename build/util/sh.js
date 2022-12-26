@@ -1,7 +1,7 @@
 // Copyright (c) 2012 Titanium I.T. LLC. All rights reserved. See LICENSE.txt for details.
 
 import child_process from "node:child_process";
-import Colors from "./colors.cjs";
+import Colors from "./colors.js";
 
 export function runAsync(command, args) {
 	const argsString = args.map(arg => {

@@ -10,7 +10,7 @@ import pathLib from "path";
 import * as paths from "../config/paths.js";
 import sound from "sound-play";
 import * as sh from "../util/sh.js";
-import Colors from "../util/colors.cjs";
+import Colors from "../util/colors.js";
 import { pathToFile } from "../util/modulePaths.js";
 
 const watchColor = Colors.cyan;
