@@ -1,11 +1,12 @@
 // Copyright (c) 2012-2018 Titanium I.T. LLC. All rights reserved. See LICENSE.txt for details.
 
-const eslint = require("eslint");
-const linter = new (eslint).Linter();
-const fs = require("fs");
-const promisify = require("util").promisify;
+import eslint from "eslint";
+import fs from "node:fs";
+import { promisify } from "node:util";
 
-exports.validateSource = function(sourceCode, options, description) {
+const linter = new (eslint).Linter();
+
+export function validateSource(sourceCode, options, description) {
 	description = description ? description + " " : "";
 
 	const messages = linter.verify(sourceCode, options);
@@ -23,9 +24,9 @@ exports.validateSource = function(sourceCode, options, description) {
 		});
 	}
 	return pass;
-};
+}
 
-exports.validateFileAsync = async function(filename, options) {
+export async function validateFileAsync(filename, options) {
 	const sourceCode = await promisify(fs.readFile)(filename, "utf8");
-	return exports.validateSource(sourceCode, options, filename);
-};
+	return validateSource(sourceCode, options, filename);
+}
