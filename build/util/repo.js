@@ -1,19 +1,19 @@
 // Copyright Titanium I.T. LLC.
 
-const sh = require("./sh.js");
+import * as sh from "./sh.js";
 
 // Functions to do things to the git repository
 
-exports.runBuildAsync = async function() {
+export async function runBuildAsync() {
 	await runAsync("./build.sh");
-};
+}
 
-exports.hasUncommittedChangesAsync = async function() {
+export async function hasUncommittedChangesAsync() {
 	const { stdout } = await runAsync("git", "status", "--porcelain");
 	return stdout !== "";
-};
+}
 
-exports.runCodeInBranch = async function(branch, fnAsync) {
+export async function runCodeInBranch(branch, fnAsync) {
 	await runAsync("git", "checkout", branch);
 	try {
 		return await fnAsync();
@@ -22,34 +22,34 @@ exports.runCodeInBranch = async function(branch, fnAsync) {
 		// switch back to previous branch when done
 		await runAsync("git", "checkout", "-");
 	}
-};
+}
 
-exports.resetToFreshCheckoutAsync = async function() {
+export async function resetToFreshCheckoutAsync() {
 	await runAsync("git", "reset", "--hard");
 	await runAsync("git", "clean", "-fdx");
-};
+}
 
-exports.mergeBranchWithCommitAsync = async function(fromBranch, toBranch, message) {
-	await exports.runCodeInBranch(toBranch, async () => {
+export async function mergeBranchWithCommitAsync(fromBranch, toBranch, message) {
+	await runCodeInBranch(toBranch, async () => {
 		await runAsync("git", "merge", fromBranch, "--no-ff", "--log", "-m", message);
 	});
-};
+}
 
-exports.mergeBranchWithoutCommitAsync = async function(fromBranch, toBranch, message) {
-	await exports.runCodeInBranch(toBranch, async () => {
+export async function mergeBranchWithoutCommitAsync(fromBranch, toBranch, message) {
+	await runCodeInBranch(toBranch, async () => {
 		await runAsync("git", "merge", fromBranch, "--ff-only");
 	});
-};
+}
 
-exports.rebaseAsync = async function(fromBranch, toBranch) {
-	await exports.runCodeInBranch(fromBranch, async () => {
+export async function rebaseAsync(fromBranch, toBranch) {
+	await runCodeInBranch(fromBranch, async () => {
 		await runAsync("git", "rebase", toBranch);
 	});
-};
+}
 
-exports.rebuildNpmPackagesAsync = async function() {
+export async function rebuildNpmPackagesAsync() {
 	await runAsync("npm", "rebuild");
-};
+}
 
 async function runAsync(command, ...args) {
 	const result = await sh.runAsync(command, args);
