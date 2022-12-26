@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-import EventEmitter from "node:events";
 
 export default class OutputTracker {
 
@@ -20,14 +19,13 @@ export default class OutputTracker {
 		return this._data;
 	}
 
-	consume() {
+	clear() {
 		const result = [ ...this._data ];
 		this._data.length = 0;
 		return result;
 	}
 
-	off() {
-		this.consume();
+	stop() {
 		this._emitter.off(this._event, this._trackerFn);
 	}
 
