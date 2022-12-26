@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-import CommandLine from "./infrastructure/command_line.cjs";
+import CommandLine from "./infrastructure/command_line.js";
 import rot13 from "./logic/rot13.js";
 import App from "./app.js";
 

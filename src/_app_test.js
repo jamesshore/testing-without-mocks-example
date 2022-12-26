@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
 import assert from "./util/assert.cjs";
-import CommandLine from "./infrastructure/command_line.cjs";
+import CommandLine from "./infrastructure/command_line.js";
 import { transform } from "./logic/rot13.js";
 import App from "./app.js";
 

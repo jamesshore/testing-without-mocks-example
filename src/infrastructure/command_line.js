@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-module.exports = class CommandLine {
+export default class CommandLine {
 
 	static create() {
 		return new CommandLine(process);
@@ -27,7 +27,7 @@ module.exports = class CommandLine {
 		return this._lastOutput;
 	}
 
-};
+}
 
 
 class NullProcess {
