@@ -2,14 +2,14 @@
 
 import assert from "./util/assert.cjs";
 import CommandLine from "./infrastructure/command_line.cjs";
-import rot13 from "./logic/rot13.cjs";
+import { transform } from "./logic/rot13.js";
 import App from "./app.js";
 
 describe("App", function() {
 
 	it("reads command-line argument, transform it with ROT-13, and write result", function() {
 		const input = "my input";
-		const expectedOutput = rot13.transform(input);
+		const expectedOutput = transform(input);
 
 		const commandLine = CommandLine.createNull({ args: [ input ]});
 		const app = App.create(commandLine);

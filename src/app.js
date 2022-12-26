@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-import rot13 from "./logic/rot13.cjs";
+import { transform } from "./logic/rot13.js";
 
 export default class App {
 
@@ -24,7 +24,7 @@ export default class App {
 		}
 
 		const input = args[0];
-		const output = rot13.transform(input);
+		const output = transform(input);
 		this._commandLine.writeOutput(output + "\n");
 	}
 

@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-exports.transform = function(input) {
+export function transform(input) {
 	if (input === undefined || typeof input !== "string") throw new Error("Expected string parameter");
 
 	let result = "";
@@ -9,7 +9,7 @@ exports.transform = function(input) {
 		result += transformLetter(charCode);
 	}
 	return result;
-};
+}
 
 function transformLetter(charCode) {
 	if (isBetween(charCode, "a", "m") || isBetween(charCode, "A", "M")) charCode += 13;

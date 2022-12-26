@@ -1,54 +1,54 @@
 // Copyright Titanium I.T. LLC.
 
 import assert from "../util/assert.cjs";
-import rot13 from "./rot13.cjs";
+import { transform } from "./rot13.js";
 
 describe("ROT-13", function() {
 
 	it("does nothing when input is empty", function() {
-		assert.equal(rot13.transform(""), "");
+		assert.equal(transform(""), "");
 	});
 
 	it("transforms lower-case letters", function() {
-		assert.equal(rot13.transform("abcdefghijklmnopqrstuvwxyz"), "nopqrstuvwxyzabcdefghijklm");
+		assert.equal(transform("abcdefghijklmnopqrstuvwxyz"), "nopqrstuvwxyzabcdefghijklm");
 	});
 
 	it("transforms upper-case letters", function() {
-		assert.equal(rot13.transform("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), "NOPQRSTUVWXYZABCDEFGHIJKLM");
+		assert.equal(transform("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), "NOPQRSTUVWXYZABCDEFGHIJKLM");
 	});
 
 	it("doesn't transform symbols", function() {
-		assertNoTransform(rot13, "`{@[");
+		assertNoTransform("`{@[");
 	});
 
 	it("doesn't transform numbers", function() {
-		assertNoTransform(rot13, "1234567890");
+		assertNoTransform("1234567890");
 	});
 
 	it("doesn't transform non-English letters", function() {
-		assertNoTransform(rot13, "åéîøüçñ");
+		assertNoTransform("åéîøüçñ");
 	});
 
 	it("doesn't break when given emojis", function() {
-		assertNoTransform(rot13, "✅🚫🙋");
+		assertNoTransform("✅🚫🙋");
 	});
 
 	it("fails fast when no parameter provided", function() {
 		assert.throws(
-			() => rot13.transform(),
+			() => transform(),
 			"Expected string parameter"
 		);
 	});
 
 	it("fails fast when wrong parameter type provided", function() {
 		assert.throws(
-			() => rot13.transform(123),
+			() => transform(123),
 			"Expected string parameter"
 		);
 	});
 
 });
 
-function assertNoTransform(rot13, input) {
-	assert.equal(rot13.transform(input), input);
+function assertNoTransform(input) {
+	assert.equal(transform(input), input);
 }
