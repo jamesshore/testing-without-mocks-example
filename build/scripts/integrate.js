@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
 import repo from "../util/repo.cjs";
-import branches from "../config/branches.cjs";
+import branches from "../config/branches.js";
 import pathLib from "node:path";
 import Colors from "../util/colors.cjs";
 

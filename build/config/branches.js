@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-module.exports = {
+export default {
 	integration: "integration",
 	dev: "dev",
 };
