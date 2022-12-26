@@ -22,6 +22,8 @@ export const lintFiles = memoizedDeglob([
 	"src/**/*.cjs",
 	"build/**/*.js",
 	"src/**/*.js",
+], [
+	"build/util/node_version_checker.js",   // ESLint doesn't yet support import assertions
 ]);
 
 export const testFiles = memoizedDeglob([

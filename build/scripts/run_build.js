@@ -1,9 +1,9 @@
 // Copyright Titanium I.T. LLC.
 
-import nodeVersionChecker from "../util/node_version_checker.cjs";
+import { checkNodeVersion } from "../util/node_version_checker.js";
 import { runBuildAsync } from "./build.js";
 
-nodeVersionChecker.check();
+checkNodeVersion();
 
 runBuildAsync(process.argv.slice(2)).then((failedTask) => {
 	if (failedTask === null) process.exit(0);
