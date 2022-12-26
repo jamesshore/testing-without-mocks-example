@@ -1,31 +1,34 @@
 // Copyright Titanium I.T. LLC.
 
-const Build = require("../util/build_runner.cjs");
-const DependencyAnalysis = require("../util/dependency_analysis.cjs");
-const paths = require("../config/paths.cjs");
-const lint = require("../util/lint_runner.cjs");
-const lintConfig = require("../config/eslint.conf.cjs");
-const pathLib = require("path");
-const shell = require("shelljs"); shell.config.fatal = true;
-const mochaRunner = require("../util/mocha_runner.cjs");
-const mochaConfig = require("../config/mocha.conf.cjs");
-const { brightRed, brightGreen } = require("../util/colors.cjs");
+import Build from "../util/build_runner.cjs";
+import DependencyAnalysis from "../util/dependency_analysis.cjs";
+import paths from "../config/paths.cjs";
+import lint from "../util/lint_runner.cjs";
+import lintConfig from "../config/eslint.conf.cjs";
+import shell from "shelljs"; shell.config.fatal = true;
+import mochaRunner from "../util/mocha_runner.cjs";
+import mochaConfig from "../config/mocha.conf.cjs";
+import Colors from "../util/colors.cjs";
+import { pathToFile } from "../../src/util/modulePaths.js";
 
-const rootDir = pathLib.resolve(__dirname, "../..");
+const successColor = Colors.brightGreen;
+const failureColor = Colors.brightRed;
+
+const rootDir = pathToFile(import.meta.url, "../..");
 
 const build = new Build({ incrementalDir: `${paths.incrementalDir}/tasks/` });
 const analysis = new DependencyAnalysis(build, rootDir, paths.testDependencies());
 
-exports.runAsync = async function(args) {
+export async function runBuildAsync(args) {
 	try {
-		await build.runAsync(args, brightGreen.inverse("   BUILD OK   "));
+		await build.runAsync(args, successColor.inverse("   BUILD OK   "));
 		return null;
 	}
 	catch (err) {
-		console.log(`\n${brightRed.inverse("   BUILD FAILURE   ")}\n${brightRed.bold(err.message)}`);
+		console.log(`\n${failureColor.inverse("   BUILD FAILURE   ")}\n${failureColor.bold(err.message)}`);
 		return err.failedTask;
 	}
-};
+}
 
 build.task("default", async() => {
 	await build.runTasksAsync([ "clean", "quick" ]);
