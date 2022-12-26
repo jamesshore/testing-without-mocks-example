@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-
 import assert from "./util/assert.js";
 import CommandLine from "./infrastructure/command_line.js";
 import * as rot13 from "./logic/rot13.js";

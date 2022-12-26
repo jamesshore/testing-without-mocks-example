@@ -1,3 +1,4 @@
+// Copyright Titanium I.T. LLC.
 import path from 'path';
 import { fileURLToPath } from 'url';
 

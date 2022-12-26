@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-
 import assert from "../util/assert.js";
 import { transform } from "./rot13.js";
 

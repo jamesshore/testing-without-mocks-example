@@ -1,5 +1,4 @@
 // Copyright Titanium I.T. LLC.
-
 import assert from "../util/assert.js";
 import childProcess from "node:child_process";
 import CommandLine from "./command_line.js";
