@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 
-import assert from "../util/assert.cjs";
+import assert from "../util/assert.js";
 import { transform } from "./rot13.js";
 
 describe("ROT-13", function() {
