@@ -133,7 +133,7 @@ The `CommandLine` class is a wrapper for `process.args` and `process.stdout`.
 
 #### [Narrow Integration Tests](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#narrow-integration-tests)
 
-The Infrastructure Layer tests in `_command_line_test.js` check that `command_line.js` can read real command-line arguments and write to the real `stdout`. They do this by spawning a separate process for each test case.
+The Infrastructure Layer tests in `_command_line_test.js` check that `command_line.js` can read real command-line arguments and write to the real `stdout`. They do this by spawning separate processes, which allows the test to control the processes' command-line arguments and observe their output.
 
 #### [Paranoic Telemetry](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#paranoic-telemetry)
 
