@@ -5,7 +5,7 @@ This is a simple example of the ideas in James Shore's [Testing Without Mocks](h
 
 ## About the Program
 
-The program is a simple ROT-13 command-line tool. To use, run `./run.sh "text to convert"` (Mac/Linux) or `run "text to convert"` (Windows). The ROT-13 output will be displayed on the command-line. For example:
+The program is a ROT-13 command-line tool. To use, run `./run.sh "text to convert"` (Mac/Linux) or `run "text to convert"` (Windows). The ROT-13 output will be displayed on the command-line. For example:
 
 ```sh
 $ ./run.sh "Hello World"
@@ -16,14 +16,20 @@ Uryyb Jbeyq
 
 The code is organized according to [A-Frame Architecture](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#a-frame-arch), which means it has a top-level <em>Application/UI</em> layer which is responsible for the command-line interface. It delegates to an <em>Infrastructure</em> layer to handle command-line arguments and output, and to a <em>Logic</em> layer to handle ROT-13 encoding. The Infrastructure and Logic layers are unaware of each other.
 
-The code is all in the `src/` directory. Other directories are part of the build system and can be ignored.
+The code is all in the `src/` tree. Other directories are part of the build system and can be ignored.
 
-* **`src/` - Application layer code** 
+### Application layer code
+
+The `src/` directory contains the Application layer code.
+
 * `run.js` - Application entry point; no meaningful code
 * `app.js` - `App` class. Reads command-line arguments and writes output.
 * `_app_test.js` - Tests for `App`.
 
-* **`src/infrastructure/` - Infrastructure layer code**
+### Infrastructure layer code
+
+The `src/infrastructure/` directory contains the Infrastructure layer code.
+
 * `infrastructure/command_line.js` - `CommandLine` class. Infrastructure wrapper for reading command-line arguments and writing to `stdout`.
 * `infrastructure/output_tracker.js` - `OutputTracker` class. Generic helper class used to track `CommandLine`'s output.
 * `infrastructure/_command_line_test.js` - Tests for `CommandLine`.
@@ -32,7 +38,10 @@ The code is all in the `src/` directory. Other directories are part of the build
 * `infrastructure/_command_line_test_nulled_output_runner.js` - Runs in a separate process. Used to test `CommandLine`'s ability to turn off writes to `stdout`.
 * `infrastructure/_command_line_test_output_runner.js` - Runs in a separate process. Used to test `CommandLine`'s ability to write to `stdout`.
 
-* **`src/logic/` - Logic layer code**
+### Logic layer code
+
+The `src/logic/` directory contains the Logic layer code.
+
 * `logic/rot13.js` - ROT-13 encoding logic.
 * `logic/_rot13_test.js` - Tests for ROT-13 logic.
 
