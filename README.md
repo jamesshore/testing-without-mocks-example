@@ -20,15 +20,11 @@ The code is all in the `src/` tree. Other directories are part of the build syst
 
 ### Application layer code
 
-The `src/` directory contains the Application layer code.
-
 * `run.js` - Application entry point; no meaningful code
 * `app.js` - `App` class. Reads command-line arguments and writes output.
 * `_app_test.js` - Tests for `App`.
 
 ### Infrastructure layer code
-
-The `src/infrastructure/` directory contains the Infrastructure layer code.
 
 * `infrastructure/command_line.js` - `CommandLine` class. Infrastructure wrapper for reading command-line arguments and writing to `stdout`.
 * `infrastructure/output_tracker.js` - `OutputTracker` class. Generic helper class used to track `CommandLine`'s output.
@@ -39,8 +35,6 @@ The `src/infrastructure/` directory contains the Infrastructure layer code.
 * `infrastructure/_command_line_test_output_runner.js` - Runs in a separate process. Used to test `CommandLine`'s ability to write to `stdout`.
 
 ### Logic layer code
-
-The `src/logic/` directory contains the Logic layer code.
 
 * `logic/rot13.js` - ROT-13 encoding logic.
 * `logic/_rot13_test.js` - Tests for ROT-13 logic.
@@ -63,11 +57,11 @@ All tests are “narrow tests,” which means they’re focused on a specific cl
 
 #### [State-Based Tests](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#state-based-tests)
 
-All tests are “state-based tests,” which means they make assertions about the return values or state of the unit under test rather than making assertions about which methods it calls. Specifically:
+All tests are “state-based tests,” which means they make assertions about the return values or state of the unit under test, rather than making assertions about which methods it calls. Specifically:
 
-* `_app_test.js` makes assertions about how `App` changes the state of the `CommandLine` given various command-line arguments.
+* `_app_test.js` makes assertions about how `App` changes the state of the `CommandLine`, given various command-line arguments.
 * `_command_line_test.js` makes assertions about how `CommandLine` reads command-line arguments and writes to `stdout`.
-* `_rot13_test.js` makes assertions about what the `transform()` function returns given various inputs.
+* `_rot13_test.js` makes assertions about what the `transform()` function returns, given various inputs.
 
 #### [Overlapping Sociable Tests](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#sociable-tests)
 
@@ -79,7 +73,7 @@ There are no broad integration tests (end-to-end tests), but `_app_test.js` and 
 
 #### [Smoke Tests](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#smoke-tests)
 
-In the interest of simplicity, this code doesn't have any smoke tests.
+In the interest of clarity, this code doesn't have any smoke tests.
 
 
 #### [Zero-Impact Instantiation](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#zero-impact)
@@ -92,13 +86,13 @@ Every class can be instantiated without providing any parameters.
 
 #### [Signature Shielding](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#sig-shielding)
 
-The `App` and `CommandLine` tests have helper methods that set up the test parameters and return multiple results. 
+The `_app_test.js` and `_command_line_tests.js` tests both have helper methods that set up the test parameters and return multiple results. 
 
-(The `rot13` tests don't use Signature Shielding because the function under test is so straightforward.)
+(The `_rot13_test.js` tests don't use Signature Shielding because the function under test is so straightforward.)
 
 #### [Collaborator-Based Isolation](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#isolation)
 
-One of the `App` tests checks what the application outputs when it's working correctly. Because it uses Sociable Tests, that test runs real ROT-13 encoding code. To prevent changes to the ROT-13 algorithm from breaking the test in the future, the test uses Collaborator-Based Isolation. Specifically, it sets up its expectation by calling `rot13.transform()`.
+The first `_app_test.js` test checks `App`'s "happy path" execution, which involves running the ROT-13 encoding function. To prevent changes to the ROT-13 algorithm from breaking that test in the future, the test uses Collaborator-Based Isolation. Specifically, it sets up its expectation by calling `rot13.transform()`.
 
 
 ### Architectural Patterns
