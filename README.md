@@ -144,11 +144,11 @@ This program doesn't call any third-party systems, so it doesn't need Paranoic T
 
 #### [Nullables](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#nullables)
 
-`CommandLine` is a Nullable infrastructure wrapper.
+Calling `CommandLine.createNull()` creates a Null version of CommandLine that operates just like the real thing, except it doesn't actually read or write to the command line. This is used by the Application Layer tests in `_app_test.js`.
 
 #### [Embedded Stub](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#embedded-stub)
 
-`CommandLine` includes a stub for `process`.
+`CommandLine.createNull()` is implemented with an embedded stub of `process`.
 
 #### [Thin Wrapper](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#thin-wrapper)
 
@@ -156,7 +156,7 @@ The code is written in JavaScript, so Thin Wrappers aren't needed.
 
 #### [Configurable Responses](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#configurable-responses)
 
-`CommandLine.createNull()` allows the command-line arguments to be configured.
+Calling `CommandLine.createNull([ "my_response" ])` will cause it to say that the program's command-line argument is "my_response". This is used by the Application Layer tests in `_app_test.js`.
 
 #### [Output Tracking](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks#output-tracking)
 
@@ -176,19 +176,4 @@ This code is too simple to have long dependency chains, so Fake It Once You Make
 The code was a green-field project, so the legacy code patterns weren't needed.
 
 
-### [Nullable Infrastructure](http://www.jamesshore.com/Blog/Testing-Without-Mocks.html#nullable-infrastructure)
-
-Calling `CommandLine.createNull()` creates a Null version of CommandLine that operates just like the real thing, except it doesn't actually read or write to the command line. This is used by the Application Layer tests in `_app_test.js`.
-
-### [Embedded Stub](http://www.jamesshore.com/Blog/Testing-Without-Mocks.html#embedded-stub)
-
-CommandLine's `createNull()` is implemented with private stubs of `process` and `console`. (Those stubs can be found at the bottom of `command_line.js`.)
-
-### [Configurable Responses](http://www.jamesshore.com/Blog/Testing-Without-Mocks.html#configurable-responses)
-
-Calling `CommandLine.createNull("my_response")` will cause it to say that the program's command-line argument is "my_response". This is used by the Application Layer tests in `_app_test.js`.
-
-### [Send State](http://www.jamesshore.com/Blog/Testing-Without-Mocks.html#send-state)
-
-After sending output to the console, you can see what was sent by calling `commandLine.getLastOutput()`. This is used by the Application Layer tests in `_app_test.js`.
-
+(end)
