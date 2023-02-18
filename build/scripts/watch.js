@@ -74,7 +74,7 @@ async function runBuild() {
 }
 
 async function shellToBuildAsync(args) {
-	return await sh.runAsync("node", [ buildScript, ...args ]);
+	return await sh.runInteractive("node", [ buildScript, ...args ]);
 }
 
 function queueAnotherBuild() {

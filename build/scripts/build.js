@@ -10,6 +10,7 @@ import { runMochaAsync } from "../util/mocha_runner.js";
 import mochaConfig from "../config/mocha.conf.js";
 import Colors from "../util/colors.js";
 import { pathToFile } from "../../src/util/modulePaths.js";
+import * as sh from "../util/sh.js";
 
 const successColor = Colors.brightGreen;
 const failureColor = Colors.brightRed;
@@ -44,6 +45,8 @@ build.task("clean", () => {
 });
 
 build.task("lint", async () => {
+	await build.runTasksAsync([ "typescript" ]);
+
 	let header = "Linting: ";
 	let footer = "";
 
@@ -68,49 +71,26 @@ build.task("lint", async () => {
 	process.stdout.write(footer);
 });
 
-// incrementalTestsTask("test", "Testing", paths.testFiles());
-allTestsTask("test", "Testing", paths.testFiles(), paths.testDependencies());
+build.incrementalTask("test", paths.testDependencies(), async () => {
+	await build.runTasksAsync([ "typescript" ]);
 
-
-function incrementalTestsTask(taskName, header, candidateTestFiles) {
-	build.task(taskName, async () => {
-		await analysis.updateAnalysisAsync();
-
-		const testFilePromises = candidateTestFiles.map(async (testFile) => {
-			const dependencyModified = await analysis.isDependencyModifiedAsync(testFile, testDependencyName(testFile));
-			if (dependencyModified) return testFile;
-			else return null;
-		});
-		const testFiles = (await Promise.all(testFilePromises)).filter((testFile) => testFile !== null);
-		if (testFiles.length === 0) return;
-
-		await runTestsAsync(header, testFiles);
-		await Promise.all(testFiles.map(async (testFile) => {
-			await build.writeDirAndFileAsync(testDependencyName(testFile), "test ok");
-		}));
-	});
-}
-
-function allTestsTask(taskName, header, testFiles, testDependencies) {
-	build.incrementalTask(taskName, testDependencies, async () => {
-		await runTestsAsync(header, testFiles);
-	});
-}
-
-async function runTestsAsync(header, testFiles) {
-	process.stdout.write(`${header}: `);
+	process.stdout.write("Testing: ");
 	await runMochaAsync({
-		files: testFiles,
+		files: paths.testFiles(),
 		options: mochaConfig,
 	});
-}
+});
+
+build.incrementalTask("typescript", paths.typescriptDependencies(), async () => {
+	console.log("Compiling: .");
+
+	const { code } = await sh.runInteractive("node_modules/.bin/tsc", []);
+	if (code !== 0) throw new Error("Compile failed");
+});
+
 
 function lintDependencyName(filename) {
 	return dependencyName(filename, "lint");
-}
-
-function testDependencyName(filename) {
-	return dependencyName(filename, "test");
 }
 
 function dependencyName(filename, extension) {

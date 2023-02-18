@@ -26,14 +26,18 @@ export const lintFiles = memoizedDeglob([
 
 export const testFiles = memoizedDeglob([
 	"build/**/_*_test.js",
-	"src/**/_*_test.js",
+	"generated/typescript/**/_*_test.js",
 ]);
 
 export const testDependencies = memoizedDeglob([
 	"build/**/*.js",
-	"src/**/*.js",
+	"generated/typescript/**/*.js",
 ], [
 	"build/util/dependency_analysis.js",
+]);
+
+export const typescriptDependencies = memoizedDeglob([
+	"src/**/*.js",
 ]);
 
 
