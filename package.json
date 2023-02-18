@@ -16,7 +16,8 @@
     "minimist": "^1.2.8",
     "mocha": "^10.2.0",
     "shelljs": "^0.8.5",
-    "sound-play": "^1.1.0"
+    "sound-play": "^1.1.0",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "test": "./build.sh",
