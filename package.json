@@ -10,7 +10,7 @@
   "type": "module",
   "devDependencies": {
     "chai": "^4.3.7",
-    "eslint": "^8.30.0",
+    "eslint": "^8.34.0",
     "gaze": "^1.1.3",
     "glob": "^8.0.3",
     "minimist": "^1.2.7",
