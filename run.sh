@@ -1,4 +1,4 @@
 #!/bin/sh
 
 . build/scripts/prebuild.sh
-node src/run.js "$*"
+node --enable-source-maps generated/typescript/run.js "$*"
