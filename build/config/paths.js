@@ -13,6 +13,7 @@ export const watchFiles = memoizedDeglob([
 export const watchRestartFiles = memoizedDeglob([
 	"build/**/*",
 	"package.json",
+	"tsconfig.json",
 	"*.cmd",
 	"*.sh",
 ], [
