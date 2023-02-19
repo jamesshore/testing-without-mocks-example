@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/deliver_agile_2018.iml" filepath="$PROJECT_DIR$/.idea/deliver_agile_2018.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/testing-without-mocks-example.iml" filepath="$PROJECT_DIR$/.idea/testing-without-mocks-example.iml" />
     </modules>
   </component>
 </project>

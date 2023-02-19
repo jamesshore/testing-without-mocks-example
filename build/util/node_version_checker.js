@@ -1,10 +1,12 @@
 // Copyright (c) 2013-2017 Titanium I.T. LLC. All rights reserved. See LICENSE.TXT for details.
 
 import Colors from "./colors.js";
-import packageJson from "../../package.json" assert { type: "json" };
+import { readFileSync } from "node:fs";
 
 export function checkNodeVersion() {
 	console.log("Checking Node.js version: .");
+
+	const packageJson = JSON.parse(readFileSync("package.json", "utf-8"));
 
 	const expectedVersion = "v" + packageJson.engines.node;
 	const actualVersion = process.version;

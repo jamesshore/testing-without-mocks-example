@@ -3,13 +3,18 @@
 import eslint from "eslint";
 import fs from "node:fs";
 import { promisify } from "node:util";
+import { Legacy } from "@eslint/eslintrc";
+const { ConfigArrayFactory } = Legacy;
 
-const linter = new (eslint).Linter();
+const linter = new eslint.Linter();
 
 export function validateSource(sourceCode, options, description) {
 	description = description ? description + " " : "";
 
-	const messages = linter.verify(sourceCode, options);
+	const configArrayFactory = new ConfigArrayFactory();
+	const configArray = configArrayFactory.create(options);
+
+	const messages = linter.verify(sourceCode, configArray);
 	const pass = (messages.length === 0);
 
 	if (pass) {
@@ -19,7 +24,7 @@ export function validateSource(sourceCode, options, description) {
 		console.log("\n" + description + "failed");
 		messages.forEach(function(error) {
 			const code = eslint.SourceCode.splitLines(sourceCode)[error.line - 1];
-			console.log(error.line + ": " + code.trim());
+			if (error.line !== 0) console.log(error.line + ": " + code?.trim());
 			console.log("   " + error.message);
 		});
 	}

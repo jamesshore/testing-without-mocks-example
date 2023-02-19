@@ -41,6 +41,9 @@ async function integrateAsync(message) {
 		writeHeader("Performing integration");
 		await repo.mergeBranchWithCommitAsync(branches.dev, branches.integration, `INTEGRATE: ${message}`);
 		await repo.mergeBranchWithoutCommitAsync(branches.integration, branches.dev);
+
+		writeHeader("Rebasing typescript");
+		await repo.rebaseAsync(branches.typescript, branches.integration);
 	}
 	catch (err) {
 		writeHeader("Failed; resetting repository");

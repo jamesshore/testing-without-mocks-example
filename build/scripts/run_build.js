@@ -7,6 +7,6 @@ checkNodeVersion();
 
 runBuildAsync(process.argv.slice(2)).then((failedTask) => {
 	if (failedTask === null) process.exit(0);
-	else if (failedTask === "lint") process.exit(1);
+	else if (failedTask === "lint" || failedTask === "compile") process.exit(1);
 	else process.exit(2);
 });

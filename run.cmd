@@ -1,3 +1,3 @@
 @echo off
 call build\scripts\prebuild
-node src/run.js %*
+node --enable-source-maps generated/typescript/run.js %*

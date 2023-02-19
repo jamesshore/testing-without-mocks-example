@@ -4,6 +4,8 @@ const ERROR = "error";
 const IGNORE = "off";
 
 export default {
+	"parser": "@typescript-eslint/parser",
+
 	"parserOptions": {
 		"ecmaVersion": 2022,
 		"sourceType": "module",
