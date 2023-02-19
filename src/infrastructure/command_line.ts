@@ -12,9 +12,11 @@ export interface CommandLineResponses {
 	args?: string[];
 }
 
+export type CommandLineOutput = string;
+
 export class CommandLine {
 
-	declare _listener: OutputListener;
+	declare _listener: OutputListener<CommandLineOutput>;
 
 	static create() {
 		return new CommandLine(process);

@@ -3,10 +3,12 @@ import EventEmitter from "node:events";
 
 const EVENT = "event";
 
-export class OutputListener {
+export class OutputListener<T> {
 
-	static create() {
-		return new OutputListener();
+	declare _emitter: EventEmitter;
+
+	static create<T>() {
+		return new OutputListener<T>();
 	}
 
 	constructor() {
@@ -14,24 +16,25 @@ export class OutputListener {
 	}
 
 	trackOutput() {
-		return new OutputTracker(this._emitter, EVENT);
+		return new OutputTracker<T>(this._emitter, EVENT);
 	}
 
-	emit(data) {
+	emit(data: T) {
 		this._emitter.emit(EVENT, data);
 	}
 
 }
 
 
-class OutputTracker {
+class OutputTracker<T> {
 
-	constructor(emitter, event) {
-		this._emitter = emitter;
-		this._event = event;
+	declare _data: T[];
+	declare _trackerFn: (data: T) => void;
+
+	constructor(readonly _emitter: EventEmitter, readonly _event: typeof EVENT) {
 		this._data = [];
 
-		this._trackerFn = (text) => this._data.push(text);
+		this._trackerFn = (data) => this._data.push(data);
 		this._emitter.on(this._event, this._trackerFn);
 	}
 
