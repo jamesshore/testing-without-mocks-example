@@ -12,6 +12,9 @@ export const watchFiles = memoizedDeglob([
 
 export const watchRestartFiles = memoizedDeglob([
 	"build/**/*",
+	"package.json",
+	"*.cmd",
+	"*.sh",
 ], [
 	"build/node_modules/**/*",
 ]);
