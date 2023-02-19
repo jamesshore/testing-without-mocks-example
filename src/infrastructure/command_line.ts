@@ -1,7 +1,20 @@
 // Copyright Titanium I.T. LLC.
 import { OutputListener } from "./output_listener.js";
 
+interface Process {
+	get argv(): string[];
+	get stdout(): {
+		write(text: string): void;
+	};
+}
+
+interface ConfigurableResponses {
+	args?: string[];
+}
+
 export class CommandLine {
+
+	declare _listener: OutputListener;
 
 	static create() {
 		return new CommandLine(process);
@@ -9,12 +22,11 @@ export class CommandLine {
 
 	static createNull({
 		args = [],
-	} = {}) {
+	}: ConfigurableResponses = {}) {
 		return new CommandLine(new StubbedProcess(args));
 	}
 
-	constructor(proc) {
-		this._process = proc;
+	constructor(readonly _process : Process) {
 		this._listener = new OutputListener();
 	}
 
@@ -22,7 +34,7 @@ export class CommandLine {
 		return this._process.argv.slice(2);
 	}
 
-	writeOutput(text) {
+	writeOutput(text: string) {
 		this._process.stdout.write(text);
 		this._listener.emit(text);
 	}
@@ -34,10 +46,9 @@ export class CommandLine {
 }
 
 
-class StubbedProcess {
+class StubbedProcess implements Process {
 
-	constructor(args) {
-		this._args = args;
+	constructor(readonly _args: string[]) {
 	}
 
 	get argv() {
