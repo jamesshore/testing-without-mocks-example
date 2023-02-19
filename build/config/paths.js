@@ -23,6 +23,7 @@ export const lintFiles = memoizedDeglob([
 	"*.js",
 	"build/**/*.js",
 	"src/**/*.js",
+	"src/**/*.ts",
 ], [
 	"build/util/node_version_checker.js",   // ESLint doesn't yet support import assertions
 ]);
@@ -30,17 +31,20 @@ export const lintFiles = memoizedDeglob([
 export const testFiles = memoizedDeglob([
 	"build/**/_*_test.js",
 	"generated/typescript/**/_*_test.js",
+	"generated/typescript/**/_*_test.ts",
 ]);
 
 export const testDependencies = memoizedDeglob([
 	"build/**/*.js",
 	"generated/typescript/**/*.js",
+	"generated/typescript/**/*.ts",
 ], [
 	"build/util/dependency_analysis.js",
 ]);
 
-export const typescriptDependencies = memoizedDeglob([
+export const compilerDependencies = memoizedDeglob([
 	"src/**/*.js",
+	"src/**/*.ts",
 ]);
 
 

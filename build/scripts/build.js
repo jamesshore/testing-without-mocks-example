@@ -81,7 +81,7 @@ build.incrementalTask("test", paths.testDependencies(), async () => {
 	});
 });
 
-build.incrementalTask("typescript", paths.typescriptDependencies(), async () => {
+build.incrementalTask("typescript", paths.compilerDependencies(), async () => {
 	console.log("Compiling: .");
 
 	const { code } = await sh.runInteractive("node_modules/.bin/tsc", []);
