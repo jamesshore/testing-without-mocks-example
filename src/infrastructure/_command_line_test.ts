@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
 import assert from "../util/assert.js";
 import childProcess from "node:child_process";
-import { CommandLine } from "./command_line.js";
+import { CommandLine, CommandLineResponses } from "./command_line.js";
 import { pathToFile } from "../util/modulePaths.js";
 
 describe("CommandLine", () => {
@@ -55,17 +55,17 @@ describe("CommandLine", () => {
 
 });
 
-async function runModuleAsync(relativeModulePath, args) {
+async function runModuleAsync(relativeModulePath: string, args?: string[]) {
 	return await new Promise((resolve, reject) => {
 		const absolutePath = pathToFile(import.meta.url, relativeModulePath);
 		const child = childProcess.fork(absolutePath, args, { stdio: "pipe" });
 
 		let stdout = "";
 		let stderr = "";
-		child.stdout.on("data", (data) => {
+		child.stdout!.on("data", (data) => {
 			stdout += data;
 		});
-		child.stderr.on("data", (data) => {
+		child.stderr!.on("data", (data) => {
 			stderr += data;
 		});
 
@@ -81,7 +81,7 @@ async function runModuleAsync(relativeModulePath, args) {
 	});
 }
 
-function createNull(options) {
+function createNull(options?: CommandLineResponses) {
 	const commandLine = CommandLine.createNull(options);
 	const output = commandLine.trackOutput();
 	return { commandLine, output };

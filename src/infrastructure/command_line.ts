@@ -8,7 +8,7 @@ interface Process {
 	};
 }
 
-interface ConfigurableResponses {
+export interface CommandLineResponses {
 	args?: string[];
 }
 
@@ -22,7 +22,7 @@ export class CommandLine {
 
 	static createNull({
 		args = [],
-	}: ConfigurableResponses = {}) {
+	}: CommandLineResponses = {}) {
 		return new CommandLine(new StubbedProcess(args));
 	}
 
