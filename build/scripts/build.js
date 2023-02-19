@@ -45,8 +45,6 @@ build.task("clean", () => {
 });
 
 build.task("lint", async () => {
-	await build.runTasksAsync([ "typescript" ]);
-
 	let header = "Linting: ";
 	let footer = "";
 
@@ -72,7 +70,7 @@ build.task("lint", async () => {
 });
 
 build.incrementalTask("test", paths.testDependencies(), async () => {
-	await build.runTasksAsync([ "typescript" ]);
+	await build.runTasksAsync([ "compile" ]);
 
 	process.stdout.write("Testing: ");
 	await runMochaAsync({
@@ -81,7 +79,7 @@ build.incrementalTask("test", paths.testDependencies(), async () => {
 	});
 });
 
-build.incrementalTask("typescript", paths.compilerDependencies(), async () => {
+build.incrementalTask("compile", paths.compilerDependencies(), async () => {
 	console.log("Compiling: .");
 
 	const { code } = await sh.runInteractive("node_modules/.bin/tsc", []);
