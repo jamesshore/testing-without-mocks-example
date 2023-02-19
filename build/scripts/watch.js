@@ -11,7 +11,7 @@ import * as paths from "../config/paths.js";
 import sound from "sound-play";
 import * as sh from "../util/sh.js";
 import Colors from "../util/colors.js";
-import { pathToFile } from "../util/modulePaths.js";
+import { pathToFile } from "../util/module_paths.js";
 
 const watchColor = Colors.cyan;
 const errorColor = Colors.brightRed.inverse;

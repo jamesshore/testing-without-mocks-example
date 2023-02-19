@@ -2,7 +2,7 @@
 import assert from "../util/assert.js";
 import childProcess from "node:child_process";
 import { CommandLine, CommandLineResponses } from "./command_line.js";
-import { pathToFile } from "../util/modulePaths.js";
+import { pathToFile } from "../util/module_paths.js";
 
 describe("CommandLine", () => {
 

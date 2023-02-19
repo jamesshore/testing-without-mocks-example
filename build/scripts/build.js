@@ -9,7 +9,7 @@ import shell from "shelljs"; shell.config.fatal = true;
 import { runMochaAsync } from "../util/mocha_runner.js";
 import mochaConfig from "../config/mocha.conf.js";
 import Colors from "../util/colors.js";
-import { pathToFile } from "../../src/util/modulePaths.js";
+import { pathToFile } from "../util/module_paths.js";
 import * as sh from "../util/sh.js";
 
 const successColor = Colors.brightGreen;
