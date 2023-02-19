@@ -17,7 +17,7 @@ describe("CommandLine", () => {
 			const { commandLine, output } = createNull();
 
 			commandLine.writeOutput("my output");
-			assert.equal(output.data, "my output");
+			assert.deepEqual(output.data, [ "my output" ]);
 		});
 
 	});
