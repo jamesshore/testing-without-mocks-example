@@ -1,6 +1,7 @@
 // Copyright Titanium I.T. LLC.
 
 export default {
-	integration: "integration",
+	integration: "javascript",
+	typescript: "typescript",
 	dev: "dev",
 };
