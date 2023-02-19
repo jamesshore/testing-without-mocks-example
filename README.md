@@ -2,6 +2,8 @@
 
 This is a simple example of the ideas in James Shore's [Testing Without Mocks](https://www.jamesshore.com/v2/projects/testing-without-mocks/testing-without-mocks) pattern language.
 
+**For JavaScript code, see the 'javascript' branch; for TypeScript code, see the 'typescript' branch.**
+
 
 ## About the Program
 
