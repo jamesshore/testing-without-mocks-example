@@ -1,5 +1,5 @@
 // Copyright Titanium I.T. LLC.
-import { OutputListener } from "./output_listener.js";
+import { OutputListener, OutputTracker } from "./output_listener.js";
 
 interface Process {
 	get argv(): string[];
@@ -16,32 +16,32 @@ export type CommandLineOutput = string;
 
 export class CommandLine {
 
-	declare _listener: OutputListener<CommandLineOutput>;
+	private readonly _listener: OutputListener<CommandLineOutput>;
 
-	static create() {
+	static create(): CommandLine {
 		return new CommandLine(process);
 	}
 
 	static createNull({
 		args = [],
-	}: CommandLineResponses = {}) {
+	}: CommandLineResponses = {}): CommandLine {
 		return new CommandLine(new StubbedProcess(args));
 	}
 
-	constructor(readonly _process : Process) {
+	constructor(private readonly _process : Process) {
 		this._listener = new OutputListener();
 	}
 
-	args() {
+	args(): readonly string[] {
 		return this._process.argv.slice(2);
 	}
 
-	writeOutput(text: string) {
+	writeOutput(text: string): void {
 		this._process.stdout.write(text);
 		this._listener.emit(text);
 	}
 
-	trackOutput() {
+	trackOutput(): OutputTracker<CommandLineOutput> {
 		return this._listener.trackOutput();
 	}
 

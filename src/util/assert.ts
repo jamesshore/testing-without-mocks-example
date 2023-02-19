@@ -7,7 +7,7 @@ import { assert } from "chai";
 
 const myAssert = { ...assert };
 
-myAssert.fail = function(message: string) {
+myAssert.fail = function(message: string): never {
 	assert.fail(null, null, message);
 };
 

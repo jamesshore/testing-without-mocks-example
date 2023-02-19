@@ -4,13 +4,13 @@ import { CommandLine } from "./infrastructure/command_line.js";
 
 export class App {
 
-	static create() {
+	static create(): App {
 		return new App(CommandLine.create());
 	}
 
-	constructor(readonly _commandLine: CommandLine) {}
+	constructor(private readonly _commandLine: CommandLine) {}
 
-	run() {
+	run(): void {
 		const args = this._commandLine.args();
 		if (args.length === 0) {
 			this._commandLine.writeOutput("Usage: run text_to_transform\n");
