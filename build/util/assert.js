@@ -1,2 +1,2 @@
-import assert from "../../src/util/assert.js";
+import assert from "../../generated/typescript/util/assert.js";
 export default assert;
