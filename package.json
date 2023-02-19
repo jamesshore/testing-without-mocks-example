@@ -9,6 +9,7 @@
   "main": "run.js",
   "type": "module",
   "devDependencies": {
+    "@typescript-eslint/parser": "^5.52.0",
     "chai": "^4.3.7",
     "eslint": "^8.34.0",
     "gaze": "^1.1.3",
