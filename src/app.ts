@@ -21,7 +21,7 @@ export class App {
 			return;
 		}
 
-		const input = args[0];
+		const input = args[0]!;
 		const output = rot13.transform(input);
 		this._commandLine.writeOutput(output + "\n");
 	}
