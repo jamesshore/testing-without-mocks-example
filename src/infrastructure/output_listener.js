@@ -1,10 +1,30 @@
 // Copyright Titanium I.T. LLC.
+import EventEmitter from "node:events";
 
-export default class OutputTracker {
+const EVENT = "event";
 
-	static create(emitter, event) {
-		return new OutputTracker(emitter, event);
+export default class OutputListener {
+
+	static create() {
+		return new OutputListener();
 	}
+
+	constructor() {
+		this._emitter = new EventEmitter();
+	}
+
+	trackOutput() {
+		return new OutputTracker(this._emitter, EVENT);
+	}
+
+	emit(data) {
+		this._emitter.emit(EVENT, data);
+	}
+
+}
+
+
+class OutputTracker {
 
 	constructor(emitter, event) {
 		this._emitter = emitter;

@@ -1,8 +1,5 @@
 // Copyright Titanium I.T. LLC.
-import OutputTracker from "./output_tracker.js";
-import EventEmitter from "node:events";
-
-const OUTPUT_EVENT = "output";
+import OutputListener from "./output_listener.js";
 
 export default class CommandLine {
 
@@ -18,7 +15,7 @@ export default class CommandLine {
 
 	constructor(proc) {
 		this._process = proc;
-		this._emitter = new EventEmitter();
+		this._listener = new OutputListener();
 	}
 
 	args() {
@@ -27,11 +24,11 @@ export default class CommandLine {
 
 	writeOutput(text) {
 		this._process.stdout.write(text);
-		this._emitter.emit(OUTPUT_EVENT, text);
+		this._listener.emit(text);
 	}
 
 	trackOutput() {
-		return OutputTracker.create(this._emitter, OUTPUT_EVENT);
+		return this._listener.trackOutput();
 	}
 
 }
