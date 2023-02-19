@@ -8,9 +8,7 @@ export class App {
 		return new App(CommandLine.create());
 	}
 
-	constructor(commandLine) {
-		this._commandLine = commandLine;
-	}
+	constructor(readonly _commandLine: CommandLine) {}
 
 	run() {
 		const args = this._commandLine.args();
