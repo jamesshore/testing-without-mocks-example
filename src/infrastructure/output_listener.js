@@ -26,10 +26,6 @@ export default class OutputListener {
 
 class OutputTracker {
 
-	static create(emitter, event) {
-		return new OutputTracker(emitter, event);
-	}
-
 	constructor(emitter, event) {
 		this._emitter = emitter;
 		this._event = event;
