@@ -1,8 +1,8 @@
 // Copyright Titanium I.T. LLC.
 import * as rot13 from "./logic/rot13.js";
-import CommandLine from "./infrastructure/command_line.js";
+import { CommandLine } from "./infrastructure/command_line.js";
 
-export default class App {
+export class App {
 
 	static create() {
 		return new App(CommandLine.create());

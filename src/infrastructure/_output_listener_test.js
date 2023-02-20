@@ -1,6 +1,6 @@
 // Copyright Titanium I.T. LLC.
 import assert from "../util/assert.js";
-import OutputListener from "./output_listener.js";
+import { OutputListener } from "./output_listener.js";
 
 describe("OutputListener", () => {
 

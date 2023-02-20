@@ -3,7 +3,7 @@ import EventEmitter from "node:events";
 
 const EVENT = "event";
 
-export default class OutputListener {
+export class OutputListener {
 
 	static create() {
 		return new OutputListener();
