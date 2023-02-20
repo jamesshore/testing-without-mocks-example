@@ -1,7 +1,7 @@
 // Copyright Titanium I.T. LLC.
-import OutputListener from "./output_listener.js";
+import { OutputListener } from "./output_listener.js";
 
-export default class CommandLine {
+export class CommandLine {
 
 	static create() {
 		return new CommandLine(process);
