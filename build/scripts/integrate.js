@@ -34,22 +34,20 @@ async function integrateAsync(message) {
 	writeHeader("Checking npm");
 	await ensureNpmBuildFilesAreIgnored();
 
-	writeHeader("Running build");
-	await repo.runBuildAsync();
+	writeHeader("Validating build");
+	await validateBuildAsync(branches.dev);
 
-	try {
-		writeHeader("Performing integration");
-		await repo.mergeBranchWithCommitAsync(branches.dev, branches.integration, `INTEGRATE: ${message}`);
-		await repo.mergeBranchWithoutCommitAsync(branches.integration, branches.dev);
+	writeHeader("Merging dev branch");
+	await mergeBranchesAsync(message);
 
-		writeHeader("Rebasing typescript");
-		await repo.rebaseAsync(branches.typescript, branches.integration);
-	}
-	catch (err) {
-		writeHeader("Failed; resetting repository");
-		await repo.resetToFreshCheckoutAsync();
-		throw err;
-	}
+	writeHeader("Validating integration");
+	await validateBuildAsync(branches.integration);
+
+	writeHeader("Rebasing TypeScript branch");
+	await rebaseTypescriptAsync();
+
+	writeHeader("Validating TypeScript");
+	await validateBuildAsync(branches.typescript);
 }
 
 async function ensureNpmBuildFilesAreIgnored() {
@@ -61,6 +59,33 @@ async function ensureNpmBuildFilesAreIgnored() {
 
 async function ensureNothingToCheckIn(errorMessage) {
 	if (await repo.hasUncommittedChangesAsync()) throw new Error(errorMessage);
+}
+
+async function mergeBranchesAsync(message) {
+	try {
+		await repo.mergeBranchWithCommitAsync(branches.dev, branches.integration, `INTEGRATE: ${message}`);
+		await repo.mergeBranchWithoutCommitAsync(branches.integration, branches.dev);
+	}
+	catch (err) {
+		writeHeader("Integration failed; resetting repository");
+		await repo.resetToFreshCheckoutAsync();
+		throw new Error("Integration failed");
+	}
+}
+
+async function rebaseTypescriptAsync() {
+	await repo.rebaseAsync(branches.typescript, branches.integration);
+}
+
+async function validateBuildAsync(branch) {
+try {
+		await repo.runCodeInBranch(branch, async() => {
+			await repo.runBuildAsync();
+		});
+	}
+	catch (err) {
+		throw new Error(`${branch} failed build`);
+	}
 }
 
 function writeHeader(message) {
