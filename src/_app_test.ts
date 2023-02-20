@@ -28,7 +28,7 @@ describe("App", () => {
 
 function run({
 	args = [],
-} = {}) {
+}: { args?: string[] } = {}) {
 	const commandLine = CommandLine.createNull({ args });
 	const output = commandLine.trackOutput();
 
